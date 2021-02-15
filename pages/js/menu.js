@@ -1,13 +1,11 @@
     
 // *********    MODAL FUNCTIONS    **********
 
-    // Get the <span> element that closes the modal
     var span = document.getElementById("close");
     var modal = document.querySelector('.modal');
     var modal_label = document.getElementById("modal-title");
     var modal_content = document.querySelector(".modal-content");
 
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
     }
@@ -16,6 +14,11 @@
 
     var main = document.getElementById("content");
 
+    function runScript(html){
+ 
+        let script = html.getElementsByTagName('script');
+        eval(script[0].innerHTML);
+    }
 
     function openNav() {
         document.getElementById("mySidenav").style.width = "450px";
@@ -35,20 +38,12 @@
             closeNav();
             if(where == "window"){
                 main.innerHTML = text;
+                runScript(main);
             }else{
                 modal_content.innerHTML = text;
                 modal_label.innerHTML = label;
                 modal.style.display = "block";
-            }
-
-            if(script != ""){
-
-                fetch( "./js/"+script)
-                .then( stream => stream.text() )
-                .then( text => {
-                    eval(text);
-                }); 
-
+                runScript(modal_content);
             }
 
         }); 
@@ -87,4 +82,59 @@ function queryDB(source,parans){
 
     return myPromisse;
     
-}    
+}
+
+// *********    CHECK DATA FUNCTIONS    **********
+
+function float_number(campo,casas=2){
+    var ok_chr = new Array('1','2','3','4','5','6','7','8','9','0');
+    var text = campo.value;
+    var after_dot = 0;
+    var out_text = '';
+    for(var i = 0; i<text.length; i++){
+
+        if(after_dot > 0){ // conta quantas casas depois da virgula
+            after_dot = after_dot + 1;
+        }
+
+        if (after_dot <= (casas + 1) ){ // se não passou das casas depois da virgula ( conta o ponto + n digitos)
+
+            if(ok_chr.includes(text.charAt(i))){
+                if (after_dot == 0){ // elimina o 0 a equerda
+                    out_text = parseFloat(out_text + text.charAt(i));                    
+                }else{
+                    out_text = out_text + text.charAt(i);
+                }
+            }
+            if((text.charAt(i) == ',' || text.charAt(i) == '.') && after_dot == 0){
+                out_text = out_text + '.';
+                after_dot = after_dot + 1;
+            }
+        }
+
+    }
+    if(out_text == ''){
+        out_text = 0;
+    }
+
+    campo.value = out_text;
+}
+
+
+function int_number(campo){
+    var ok_chr = new Array('1','2','3','4','5','6','7','8','9','0');
+    var text = campo.value;
+    var out_text = '';
+    for(var i = 0; i<text.length; i++){
+
+        if(ok_chr.includes(text.charAt(i))){
+            out_text = out_text + text.charAt(i); 
+        }
+
+    }
+    if(out_text == ''){
+        out_text = 0;
+    }
+
+    campo.value = parseFloat(out_text);
+}

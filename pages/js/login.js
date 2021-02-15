@@ -24,8 +24,6 @@ signinBtn.onclick = (()=>{
 	return false;
 });
 
-
-
 signinForm.addEventListener("submit",function(event){
 	event.preventDefault();
 
