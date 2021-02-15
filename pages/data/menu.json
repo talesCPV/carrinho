@@ -1,0 +1,39 @@
+{
+	"menu": [
+		{"modulo": "Home",
+		"link": "main.php",
+		"icone": "fa fa-home",
+		"id": "menuHome",
+		"perm": [10,4,3,2,1],
+		"itens": []
+		},
+	 	{"modulo": "Pesquisa",
+		 "link": "#",
+		 "icone": "fa fa-search",
+		 "id": "menuPesquisa",
+		 "perm": [4,10,3],
+		 "itens": [
+
+		 			{
+						"menu" : "Produtos",
+						"label": "Cadastro de Produtos",
+						"template": "produto.html",
+						"script":"produto.js",
+						"icone": "fa fa-archive",
+						"window": "modal",
+						"perm": [10,4,3]
+					}	
+		 		  ]
+
+		},
+	
+	 	{"modulo": "Preferências",
+		 "link": "config.php",
+		 "icone": "fa fa-cogs",
+		 "id": "menuNF",
+		 "perm": [10,4,3,2,1],
+		 "itens": []
+		}
+	]
+	
+}

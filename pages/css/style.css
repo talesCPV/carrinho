@@ -1,0 +1,169 @@
+    .label_1{
+        background-color: #255;
+        text-align: center;
+        padding: 20px;
+    }
+
+    /*
+    .form {
+        max-width: 450px;
+        background: #FAFAFA;
+        padding: 30px;
+        margin: 50px auto;
+        box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+        border-radius: 10px;
+        border: 6px solid #305A72;
+        display: block;
+    }
+
+    .form ul{
+        padding:0;
+        margin:0;
+        list-style:none;
+    }
+    .form ul li{
+        display: block;
+        margin-bottom: 10px;
+        min-height: 35px;
+
+    }
+    .form ul li  .field-style{
+        box-sizing: border-box; 
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box; 
+        padding: 8px;
+        outline: none;
+        border: 1px solid #B0CFE0;
+        -webkit-transition: all 0.30s ease-in-out;
+        -moz-transition: all 0.30s ease-in-out;
+        -ms-transition: all 0.30s ease-in-out;
+        -o-transition: all 0.30s ease-in-out;
+
+    }.form ul li  .field-style:focus{
+        box-shadow: 0 0 5px #B0CFE0;
+        border:1px solid #B0CFE0;
+    }
+    .form ul li .field-split{
+        width: 48%;
+    }
+    .form ul li .field-full{
+        width: 100%;
+    }
+    .form ul li .align-left{
+        float:left;
+        margin: 2px;
+    }
+    .form ul li .align-right{
+        float:right;
+        margin: 2px;
+
+    }
+    .form ul li textarea{
+        width: 100%;
+        height: 100px;
+    }
+    .form ul li input[type="button"], 
+    .form ul li input[type="submit"] {
+        -moz-box-shadow: inset 0px 1px 0px 0px #3985B1;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #3985B1;
+        box-shadow: inset 0px 1px 0px 0px #3985B1;
+        background-color: #216288;
+        border: 1px solid #17445E;
+        display: inline-block;
+        cursor: pointer;
+        color: #FFFFFF;
+        padding: 8px 18px;
+        text-decoration: none;
+        font: 12px Arial, Helvetica, sans-serif;
+    }
+    .form ul li input[type="button"]:hover, 
+    .form ul li input[type="submit"]:hover {
+        background: linear-gradient(to bottom, #2D77A2 5%, #337DA8 100%);
+        background-color: #28739E;
+    }
+   */
+    .display {
+       
+        max-width: 80%;
+        background: #d6d6d6;
+        padding: 30px;
+        margin: 50px auto;
+        box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+        border-radius: 10px;
+        border: 6px solid #305A72;
+    }
+
+    .title{
+        font-size: 25px;
+        font-weight: 500;
+        text-align: center;
+    }
+ 
+    table{
+        font-family: Arial, Helvetica, sans-serif;
+        width: 100%;
+    }
+
+    table td th{
+        border: 5px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    table th{
+        background-color: rgb(77, 77, 77);
+        color: rgb(214, 214, 214) ;
+    }
+
+    table td label
+    {
+        font-size: 20px;
+        font-weight: 600;
+        width: 100%;
+        margin: auto;
+    }
+
+    table td select,
+    table td input,
+    table td button
+    {
+        width: 95%;
+        height: 50px;
+        margin: 5px 0;
+        padding: 0px 2px;
+        border: 0px;
+        font-size: 18px;
+
+    }
+
+    button{
+        min-width: 100px;  
+        padding: 10px;
+        background-color: rgb(44, 107, 109);
+        color: rgb(195, 215, 216);
+        margin: auto;
+    }
+
+    button:hover, select:hover{
+        background: rgb(78, 154, 156);
+        color: black;
+        cursor: pointer;
+        
+    }
+
+    .search-table tr:nth-child(odd){
+        background-color: #fafafa;
+        color: rgb(31, 22, 22);
+      }
+
+    .search-table tr:nth-child(even) {
+        background-color: #b9b9b9;
+        color: rgb(31, 22, 22);
+    }
+
+    .search-table tr:hover {
+        background-color: rgb(14, 13, 13);
+        color: #FFF;
+        cursor: pointer;
+    }
+
