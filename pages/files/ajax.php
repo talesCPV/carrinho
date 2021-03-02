@@ -22,6 +22,23 @@
 
                 $found = true;                
                 break;
+            case "unidade":
+                $field = $_POST ["param_0"];
+                $valor = $_POST ["param_1"];
+
+                $query = "SELECT * from tb_und where {$field} LIKE '%{$valor}%' order by {$field}";
+
+                $found = true;                
+                break;
+            case "next_cod":
+                $table = $_POST ["param_0"];
+                $field = $_POST ["param_1"];
+                $where = $_POST ["param_2"];
+
+                $query = "SELECT MAX({$field})+1 from {$table} {$where} ;";
+
+                $found = true;                
+                break;                
             case "new_prod":
                 $idemp = $_POST ["param_0"];
                 $desc = $_POST ["param_1"];

@@ -1,0 +1,62 @@
+<div class="display">
+    <table>
+        <tr><td>Cod</td><td id="tdCod"></td></tr>
+        <tr><td>Descrição</td><td id="tdDesc"></td></tr>
+        <tr><td>Unidade</td><td id="tdUnd"></td></tr>
+        <tr><td>Etq</td><td id="tdEtq"></td></tr>
+        <tr><td>Cod. do Prod</td><td id="tdCodProd"></td></tr>
+        <tr><td>Fornecedor</td><td id="tdForn"></td></tr>
+        <tr><td>Preço</td><td id="tdPreco"></td></tr>
+        <tr><td>NCM</td><td id="tdNCM"></td></tr>
+    </table>
+</div>
+
+<div class="display"  >
+
+        <button id="btnEditar">Editar</button>
+        <button id="btnDel">Deletar</button>    
+
+</div>
+
+<script>
+    const btnEditar = document.getElementById("btnEditar");
+    const btnDel = document.getElementById("btnDel");
+
+    btnEditar.addEventListener("click",()=>{
+        openHTML("cad_prod.html","Cadastro de Produto","modal"); 
+    });
+    btnDel.addEventListener("click",()=>{
+        alert("Deletar");
+    });
+
+    if(global_params.length > 0){
+        document.getElementById('tdCod').innerHTML = global_params[1].toUpperCase();
+        document.getElementById('tdDesc').innerHTML = global_params[2].toUpperCase();
+        document.getElementById('tdUnd').innerHTML = global_params[3].toUpperCase();
+        document.getElementById('tdEtq').innerHTML = global_params[4].toUpperCase();
+        document.getElementById('tdCodProd').innerHTML = global_params[5].toUpperCase();
+        document.getElementById('tdForn').innerHTML = global_params[6].toUpperCase();
+        document.getElementById('tdPreco').innerHTML = global_params[7].toUpperCase();
+        document.getElementById('tdNCM').innerHTML = global_params[8].toUpperCase();
+    }
+
+/*
+    const query = queryDB("pesq_prod",['p.id='+id+' AND p.id',id]);
+    query.then(result =>{
+         
+        let arr = JSON.parse(result);
+            document.getElementById('tdCod').innerHTML = arr[0][1].toUpperCase();
+            document.getElementById('tdDesc').innerHTML = arr[0][2].toUpperCase();
+            document.getElementById('tdUnd').innerHTML = arr[0][3].toUpperCase();
+            document.getElementById('tdEtq').innerHTML = arr[0][4].toUpperCase();
+            document.getElementById('tdCodProd').innerHTML = arr[0][5].toUpperCase();
+            document.getElementById('tdForn').innerHTML = arr[0][6].toUpperCase();
+            document.getElementById('tdPreco').innerHTML = arr[0][7].toUpperCase();
+            document.getElementById('tdNCM').innerHTML = arr[0][8].toUpperCase();
+
+        });
+        query.catch(error =>{
+            alert(error);
+        });
+*/
+</script>

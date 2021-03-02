@@ -52,7 +52,7 @@
                     $item_icone = $a['icone'];
 
                     if(in_array($class, $item_perm)){
-                      echo "<a onclick='openHTML(\"{$item_template}\",\"{$item_script}\",\"{$item_label}\")'>{$item_menu}</a>";
+                      echo "<a onclick='openHTML(\"{$item_template}\",\"{$item_label}\")'>{$item_menu}</a>";
                     }
                 }
 

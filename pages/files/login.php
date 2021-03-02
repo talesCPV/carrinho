@@ -1,12 +1,6 @@
  
 <?php
 
-    // CLEAR SESSION
-    session_start();
-    session_destroy();
-    unset($_SESSION);
-
-
     if(IsSet($_POST['edtUser']) && IsSet($_POST['edtPass'])){
         include "database.php";
         $user = crip($_POST ["edtUser"]);

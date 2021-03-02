@@ -37,16 +37,15 @@
 
 <script>
 
-
     const btnNovo = document.getElementById("btnNovo");
     const btnPesq = document.getElementById("btnPesq");
     const edtBusca = document.getElementById('edtBusca');
     const cmbBusca = document.getElementById('cmbBusca');
     const table = document.querySelector('.search-table');
 
-
     btnNovo.addEventListener("click", function(){
-        openHTML("cad_prod.html","","Cadastro de Produto","modal");    
+        global_params = [];
+        openHTML("cad_prod.html","Cadastro de Produto","modal");    
     });
 
     cmbBusca.addEventListener("change", function(){
@@ -95,13 +94,41 @@
                     row.appendChild(td);
                 });
 
-                table.appendChild(row);
+                table.appendChild(row);                
             
             });
 
         });
         resp.catch(error =>{
             alert(error);
+        });
+
+
+        table.addEventListener("dblclick",(event)=>{
+            let target = event.target;
+            while (target.nodeName != 'TR') {
+                target = target.parentElement;
+            }
+            let row = target.cells; 
+
+
+            let id = row[0].firstChild ? row[0].firstChild.data : "" ;
+            let cod = row[1].firstChild ? row[1].firstChild.data : "" ;
+            let desc = row[2].firstChild ? row[2].firstChild.data : "" ;
+            let und = row[3].firstChild ? row[3].firstChild.data : "" ;
+            let etq = row[4].firstChild ? row[4].firstChild.data : "" ;
+            let codprod = row[5].firstChild ? row[5].firstChild.data : "" ;
+            let empresa = row[6].firstChild ? row[6].firstChild.data : "" ;
+            let preco = row[7].firstChild ? row[7].firstChild.data : "" ;
+            let ncm = row[8].firstChild ? row[8].firstChild.data : "" ;
+            let tipo = row[9].firstChild ? row[9].firstChild.data : "" ;
+        //       let salario = row[4].firstChild ? number(row[4].firstChild.data) : "" ;
+
+           
+            global_params = [id,cod,desc,und,etq,codprod,empresa,preco,ncm,tipo];
+            openHTML("show_prod.html","Detalhes do Produto","modal");
+
+
         });
 
 

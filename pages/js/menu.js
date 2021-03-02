@@ -1,4 +1,5 @@
-    
+let global_params;
+
 // *********    MODAL FUNCTIONS    **********
 
     var span = document.getElementById("close");
@@ -30,7 +31,7 @@
         document.getElementById("menulink").style.marginLeft= "0";
     }
 
-    function openHTML(template, script,label,where="window"){        
+    function openHTML(template, label,where="window"){        
 
         fetch( "./templates/"+template)
         .then( stream => stream.text() )
@@ -137,4 +138,27 @@ function int_number(campo){
     }
 
     campo.value = parseFloat(out_text);
+}
+
+// *********    POPULATION FIELDS    **********
+
+// fill combobox with query from DB (combobox, ajax source, query params, index params (option.innerHTML, option.value))
+function fillCmb(select,source,params,index_params){
+    const query = queryDB(source,params);
+
+    query.then(result =>{
+        let arr = JSON.parse(result);
+
+        arr.forEach((item)=>{
+            let op = document.createElement('option');
+            op.innerHTML = item[index_params[0]].toUpperCase();
+            op.value = item[index_params[1]];
+            select.appendChild(op);        
+        });
+
+    });
+    query.catch(error =>{
+        alert(error);
+    });
+        
 }
