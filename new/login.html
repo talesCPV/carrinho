@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <style>
+        body{
+            background-color: rgb(86, 184, 78);
+            font-family: 'Raleway';font-size: 14px;        
+        }
+        nav{
+            display: grid;
+            background: rgb(224, 255, 212);
+            width : 200px;
+            height: 300px;
+            position: absolute;
+            top: 0; bottom: 0;
+            left: 0; right: 0;
+            margin: auto;
+            border-radius: 20px;
+            padding: 30px;
+        }
+        footer{
+            margin: 0 auto;            
+        }
+        img{
+            width: 100%;
+        }
+
+        button, input{
+            width: 100%;
+            margin: 0 auto;
+            padding: 5px;    
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="img/logo.png" alt="">
+        </div>
+        <div class="form">       
+            <input type="text" name="edtUser" id="edtUser" placeholder="EMAIL">         
+            <input type="password" name="edtPass" id="edtPass" placeholder="SENHA">
+            <button id="btnLogin">SIFLEX - 2021</button>
+        </div>
+        <footer>
+            <p>SIFLEX - 2021 - Flexibus<span>&#174;</span></p> 
+        </footer>
+    </nav>    
+</body>
+
+<script>
+
+    document.getElementById('btnLogin').addEventListener('click',()=>{
+
+        const mail = document.getElementById('edtUser').value.trim();
+        const pass = document.getElementById('edtPass').value.trim();
+        const query = `SELECT * FROM tb_usuario WHERE email='${mail}' AND pass='${pass}' ;`;
+        const data = new URLSearchParams();        
+        data.append("query", query);
+        const myRequest = new Request("ajax/ajax.php",{
+            method : "POST",
+            body : data
+        });
+        const myPromisse = new Promise((resolve,reject) =>{
+
+            fetch(myRequest)
+            .then(function (response){
+
+                if (response.status === 200) { 
+                    resolve(response.text());
+                } else { 
+                    reject(new Error("Houve algum erro na comunicação com o servidor"));
+                } 
+
+            });            
+
+        });
+
+        myPromisse.then((resolve)=>{
+
+            if(resolve.trim() != ""){
+                const json = JSON.parse(resolve);
+//                console.log(json[0]);
+                localStorage.setItem("id",json[0].id);
+                localStorage.setItem("nome",json[0].nome);
+                localStorage.setItem("class",json[0].class);
+                localStorage.setItem("email",mail);
+                localStorage.setItem("pass",pass);
+                window.open("main.html","_self")
+            }else{
+                alert("Usuário ou senha inválido!");
+                localStorage.clear();
+            }        
+
+        });
+
+    });   
+
+</script>
+</html>

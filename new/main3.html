@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIFLEX - 2021</title>
+    <style>
+        .grid{
+            display: grid;
+            border: solid 5px darkblue;
+            grid-template-areas: 
+                "nav      nav    nav"
+                "sidearea main   main"
+                "footer   footer footer "
+            ;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 2fr 1fr;
+            grid-gap: 20px;
+            padding: 20px;
+        }
+
+        .grid > *{
+            background-color: darkcyan;
+            padding: 10px;
+        }
+
+        nav{
+            grid-area: nav;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        main{
+            grid-area: main;
+        }
+
+        footer{
+            grid-area: footer;
+        }
+
+        .sidebar{
+            grid-area: sidearea;
+        }
+
+        ul li{
+            list-style: none;
+            float: left;
+            padding: 0 10px;
+        }
+
+        ul{
+            display: inline;
+            
+        }
+
+    </style>
+</head>
+<body>
+    <section class="grid">
+        <nav>
+            <div class="logo">
+                LOGO
+            </div>
+            <ul>
+                <li>email@email.com.br</li>
+                <li>logout</li>
+            </ul>    
+        </nav>
+        <main>
+            MAIN
+        </main> 
+        <div class="sidebar">
+            sidebar
+        </div>
+        <footer>
+            FOOTER
+        </footer>
+
+    </section>
+
+</body>
+</html>

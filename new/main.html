@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <style>
+        :root{
+            --cor-barra:#FFFFFF;
+            --font-barra:#666666;
+            --cor-menu:#30363E;
+            --font-menu:#FFFFFF;
+            --cor-section:#EEEEEE;
+            --font-section:#000000;
+        }
+
+        html, body{
+            height: 100%;
+            margin: 0;
+            font-family: 'Open Sans',serif;
+        }
+
+        a{
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        ul{
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+
+        }
+
+        .wrapper{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fixed{
+            background: var(--cor-barra);            
+            color:var(--font-barra);
+           
+        }
+
+        .item{
+            width: 100%;
+            height: auto;
+            margin: 0 ;
+            background: var(--cor-section);
+            color: var(--font-section);
+            padding: 50px 20px;
+            margin: 0 ;
+            overflow: auto;
+        }
+
+        .side-bar{
+
+          background:var(--cor-menu);
+          color:var(--font-menu);
+          width: auto;
+          overflow: auto;
+        }
+
+        .main{
+            display: flex;
+            height: 100%;
+            width: auto;
+
+        }
+        .menu{
+            position: fixed;            
+            top: 0;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .footer{
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            align-items: center;
+            padding: 0 30px;
+
+        }
+
+        .menu-label{
+
+          display: none;
+
+        }
+
+
+      .w3-bar-item{
+        padding: 0;
+      }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="fixed menu">
+            <a href="#">FLEXIBUS SANFONADOS LTDA.</a>
+            <div class="data-user">DATA USUARIO</div>
+        </nav>
+        <div class="main">
+            <main class="item side-bar">
+              <button class="w3-button w3-xlarge" id="btnMenu" >&#9776;</button>            
+              <div class="w3-bar-block w3-transparent sidebar-menu">
+                <ul>                  
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-home"></i><div class="menu-label"> Home do Menu</div></a> </li> 
+                  <li><a href="#" class="w3-bar-item w3-button" onclick="myAccFunc()">
+                    <i class="fa fa-search" ></i> 
+                      <div id="demoAcc" class="w3-hide w3-transparent">
+                        <a href="#" id="btnTeste" class="w3-bar-item w3-button">Teste</a>
+                        <a href="#" class="w3-bar-item w3-button">Produtos</a>
+                      </div>
+                  </a></li>
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-edit"></i></a></li>
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a></li>
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-globe"></i></a></li>
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-sign-in"></i></a></li>
+                </ul>
+                
+              </div>
+            </main>
+            <section class="item">section </section>
+        </div>
+        <footer class="fixed footer">FIXED FOOTER</footer>    
+    </div>
+</body>
+<script>
+
+  var flag = false;
+
+  let btnTeste = document.getElementById('btnTeste');
+
+  function loadMenu(){
+    const data = new URLSearchParams();        
+    data.append("email", localStorage.getItem("email"));
+    data.append("pass", localStorage.getItem("pass"));
+    const myRequest = new Request("ajax/load_menu.php",{
+        method : "POST",
+        body : data
+    });
+    const myPromisse = new Promise((resolve,reject) =>{
+
+        fetch(myRequest)
+        .then(function (response){
+
+            if (response.status === 200) { 
+                resolve(response.text());
+            } else { 
+                reject(new Error("Houve algum erro na comunicação com o servidor"));
+            } 
+
+        });            
+
+    });
+
+    myPromisse.then((resolve)=>{
+
+        if(resolve.trim() != ""){
+          const menu_json = JSON.parse(resolve);
+//          console.log(menu_json);
+
+          const sidebar = document.querySelector('.sidebar-menu');
+          const ul =  document.createElement('ul');
+
+
+          for(let i=0; i<menu_json.length; i++){
+            console.log(menu_json[i]);
+            const li =  document.createElement('li');
+            const a =  document.createElement('a');
+            a.className = "w3-bar-item w3-button";
+            a.addEventListener('click',myAccFunc());
+//            a.onclick(myAccFunc());
+            a.innerHTML = `<i class="${menu_json[i][2]}"></i>
+            <div id="demoAcc" class="w3-hide w3-transparent">
+                        <a href="#" id="btnTeste" class="w3-bar-item w3-button">Teste</a>
+                        <a href="#" class="w3-bar-item w3-button">Produtos</a>
+                      </div>
+            
+            `;
+            li.appendChild(a);
+            ul.appendChild(li);
+
+
+          }
+
+          sidebar.innerHTML = "";
+          sidebar.appendChild(ul);
+
+
+
+        }        
+
+    });
+
+  }
+
+
+
+  btnTeste.addEventListener('click',()=>{
+
+    loadMenu();
+
+  });
+
+
+
+  document.getElementById('btnMenu').addEventListener('click', ()=>{
+    if(flag){
+      document.querySelector('.menu-label').style.display = "none";
+    }else{
+      document.querySelector('.menu-label').style.display = "inline";
+    }
+    flag = !flag;
+  })
+
+  function myAccFunc() {
+    var x = document.getElementById("demoAcc");
+    if (x.className.indexOf("w3-show") == -1) {
+      x.className += " w3-show";
+      x.previousElementSibling.className += " w3-green";
+    } else { 
+      x.className = x.className.replace(" w3-show", "");
+      x.previousElementSibling.className = 
+      x.previousElementSibling.className.replace(" w3-green", "");
+    }
+  }
+
+
+</script>
+</html>
