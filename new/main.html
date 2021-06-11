@@ -122,9 +122,9 @@
               <div class="w3-bar-block w3-transparent sidebar-menu">
                 <ul>                  
                   <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-home"></i><div class="menu-label"> Home do Menu</div></a> </li> 
-                  <li><a href="#" class="w3-bar-item w3-button" onclick="myAccFunc()">
+                  <li><a href="#" class="w3-bar-item w3-button" onclick="myAccFunc(this)">
                     <i class="fa fa-search" ></i> 
-                      <div id="demoAcc" class="w3-hide w3-transparent">
+                      <div class="demoAcc w3-hide w3-transparent">
                         <a href="#" id="btnTeste" class="w3-bar-item w3-button">Teste</a>
                         <a href="#" class="w3-bar-item w3-button">Produtos</a>
                       </div>
@@ -133,8 +133,9 @@
                   <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a></li>
                   <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-globe"></i></a></li>
                   <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-sign-in"></i></a></li>
-                </ul>
-                
+                </ul>                              
+
+
               </div>
             </main>
             <section class="item">section </section>
@@ -143,6 +144,9 @@
     </div>
 </body>
 <script>
+
+  loadMenu();
+
 
   var flag = false;
 
@@ -177,34 +181,57 @@
           const menu_json = JSON.parse(resolve);
 //          console.log(menu_json);
 
+          localStorage.setItem("menu",menu_json);
+
           const sidebar = document.querySelector('.sidebar-menu');
           const ul =  document.createElement('ul');
 
 
           for(let i=0; i<menu_json.length; i++){
-            console.log(menu_json[i]);
+//            console.log(menu_json[i]);
+
             const li =  document.createElement('li');
+            li.className = "w3-tooltip";
             const a =  document.createElement('a');
             a.className = "w3-bar-item w3-button";
-            a.addEventListener('click',myAccFunc());
-//            a.onclick(myAccFunc());
-            a.innerHTML = `<i class="${menu_json[i][2]}"></i>
-            <div id="demoAcc" class="w3-hide w3-transparent">
-                        <a href="#" id="btnTeste" class="w3-bar-item w3-button">Teste</a>
-                        <a href="#" class="w3-bar-item w3-button">Produtos</a>
-                      </div>
-            
-            `;
-            li.appendChild(a);
-            ul.appendChild(li);
+            a.setAttribute("onclick", "myAccFunc(this)"); 
 
+            const icon = document.createElement('i');
+            icon.className = menu_json[i][2];
+
+
+
+            const accordion = document.createElement('div');
+            accordion.className = "w3-hide w3-transparent";
+            accordion.id = menu_json[i][2];
+            for(let j=0; j<menu_json[i][3].length; j++){
+
+              const subname = document.createElement('a');
+              subname.className = "w3-bar-item w3-button";
+
+              const subicon = document.createElement('i');
+              subicon.className = menu_json[i][3][j][2];
+//              subicon.innerHTML = " "+menu_json[i][3][j][0];
+//              subicon.style = "font-family: 'Open Sans',serif;"
+              
+              subname.style = "paddinf-left : 10px;"
+              subname.innerHTML  = menu_json[i][3][j][0];
+//              subname.appendChild(subicon);
+
+
+//              console.log(menu_json[i][3][j][0]);
+              accordion.appendChild(subname);
+            }
+        
+            a.appendChild(icon);
+            li.appendChild(a);
+            li.appendChild(accordion);
+            ul.appendChild(li);
 
           }
 
           sidebar.innerHTML = "";
           sidebar.appendChild(ul);
-
-
 
         }        
 
@@ -231,8 +258,12 @@
     flag = !flag;
   })
 
-  function myAccFunc() {
-    var x = document.getElementById("demoAcc");
+  function myAccFunc(obj) {
+    
+//    var x = document.querySelector(".demoAcc");
+    var x = obj.nextElementSibling;
+    console.log(x);
+
     if (x.className.indexOf("w3-show") == -1) {
       x.className += " w3-show";
       x.previousElementSibling.className += " w3-green";
@@ -241,6 +272,8 @@
       x.previousElementSibling.className = 
       x.previousElementSibling.className.replace(" w3-green", "");
     }
+
+
   }
 
 
