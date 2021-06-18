@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <style>
+        :root{
+            --cor-barra:#FFFFFF;
+            --font-barra:#666666;
+            --cor-menu:#30363E;
+            --font-menu:#FFFFFF;
+            --cor-section:#EEEEEE;
+            --font-section:#000000;
+        }
+
+        html, body{
+            height: 100%;
+            margin: 0;
+            font-family: 'Open Sans',serif;
+        }
+
+        a{
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        ul{
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+
+        }
+
+        .wrapper{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fixed{
+            background: var(--cor-barra);            
+            color:var(--font-barra);
+           
+        }
+
+        .item{
+            width: 100%;
+            height: auto;
+            margin: 0 ;
+            background: var(--cor-section);
+            color: var(--font-section);
+            padding: 50px 20px;
+            margin: 0 ;
+            overflow: auto;
+        }
+
+        .side-bar{
+
+          background:var(--cor-menu);
+          color:var(--font-menu);
+          width: auto;
+          overflow: auto;
+        }
+
+        .main{
+            display: flex;
+            height: 100%;
+            width: auto;
+
+        }
+        .menu{
+            position: fixed;            
+            top: 0;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .footer{
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            align-items: center;
+            padding: 0 30px;
+
+        }
+
+        .menu-label{
+
+          display: none;
+
+        }
+
+
+      .w3-bar-item{
+        padding: 0;
+      }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="fixed menu">
+            <a href="#">FLEXIBUS SANFONADOS LTDA.</a>
+            <div class="data-user">DATA USUARIO</div>
+        </nav>
+        <div class="main">
+            <main class="item side-bar">
+              <button class="w3-button w3-xlarge" id="btnMenu" onclick="openLeftMenu()">&#9776;</button>            
+              <div class="w3-bar-block w3-transparent">
+                <ul>                  
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-home"></i><div class="menu-label"> Home do Menu</div></a> </li> 
+                  <li><a href="#" class="w3-bar-item w3-button" onclick="myAccFunc()">
+                    <i class="fa fa-search" ></i> 
+                      <div id="demoAcc" class="w3-hide w3-transparent">
+                        <a href="#" class="w3-bar-item w3-button">Empresas</a>
+                        <a href="#" class="w3-bar-item w3-button">Produtos</a>
+                      </div>
+                  </a></li>
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-edit"></i></a></li>
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a></li>
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-globe"></i></a></li>
+                  <li><a href="#" class="w3-bar-item w3-button"><i class="fa fa-sign-in"></i></a></li>
+                </ul>
+                
+              </div>
+            </main>
+            <section class="item">section
+
+                Os ítens serão dispostos no leiaute seguindo ou o eixo principal ou o transversal.
+
+                Eixo principal: o eixo principal de um flex container é o eixo primário e ao longo dele são inseridos os flex items. Cuidado: O eixo principal não é necessariamente horizontal; vai depender da propriedade flex-direction (veja abaixo).
+            
+                main-start | main-end: os flex items são inseridos dentro do container começando pelo lado start, indo em direção ao lado end.
+            
+                Tamanho principal: A largura ou altura de um flex item, dependendo da direção do container, é o tamanho principal do ítem. A propriedade de tamanho principal de um flex item pode ser tanto width quanto height, dependendo de qual delas estiver na direção principal.
+            
+                Eixo transversal: O eixo perpendicular ao eixo principal é chamado de eixo transversal. Sua direção depende da direção do eixo principal.
+            
+                cross-start | cross-end: Linhas flex são preenchidas com ítens e adicionadas ao container, começando pelo lado cross start do flex container em direção ao lado cross end.
+            
+                cross size: A largura ou altura de um flex item, dependendo do que estiver na dimensão transversal, é o cross size do íten. A propriedade cross size pode ser tanto a largura quanto a altura do ítem, o que estiver na transversal.
+            
+            Flex container é o elemento que envolve sua estrutura. Você define que um elemento é um Flex Container com a propriedade display e valores flex ou inline-flex.
+            
+              .flex-container {
+                display: flex;
+              }
+            
+            Flex Item são elementos-filhos do flex container.
+            
+            Eixos ou Axes são as duas direções básicas que existem em um Flex Container: main axis, ou eixo principal, e cross axis, ou eixo transversal.
+            Propriedades para o elemento-pai
+            
+            container flex
+            
+            Quando utilizamos o Flexbox, é muito importante saber quais propriedades são declaradas no elemento-pai (por exemplo, uma div que irá conter os elementos a serem alinhados) e quais serão declaradas nos elementos-filhos. Abaixo, seguem propriedades que devem ser declaradas utilizando o elemento-pai como seletor (para alinhar elementos-filhos):
+            
+            display
+            
+            Esta propriedade define um flex container; inline ou block dependendo dos valores passados. Coloca todos os elementos-filhos diretos num contexto Flex.
+            
+            .container {
+              display: flex; /* or inline-flex */
+            }
+            
+            Note que a propriedade de CSS columns não tem efeito em um flex container.
+            flex-direction                
+
+            Os ítens serão dispostos no leiaute seguindo ou o eixo principal ou o transversal.
+
+            Eixo principal: o eixo principal de um flex container é o eixo primário e ao longo dele são inseridos os flex items. Cuidado: O eixo principal não é necessariamente horizontal; vai depender da propriedade flex-direction (veja abaixo).
+        
+            main-start | main-end: os flex items são inseridos dentro do container começando pelo lado start, indo em direção ao lado end.
+        
+            Tamanho principal: A largura ou altura de um flex item, dependendo da direção do container, é o tamanho principal do ítem. A propriedade de tamanho principal de um flex item pode ser tanto width quanto height, dependendo de qual delas estiver na direção principal.
+        
+            Eixo transversal: O eixo perpendicular ao eixo principal é chamado de eixo transversal. Sua direção depende da direção do eixo principal.
+        
+            cross-start | cross-end: Linhas flex são preenchidas com ítens e adicionadas ao container, começando pelo lado cross start do flex container em direção ao lado cross end.
+        
+            cross size: A largura ou altura de um flex item, dependendo do que estiver na dimensão transversal, é o cross size do íten. A propriedade cross size pode ser tanto a largura quanto a altura do ítem, o que estiver na transversal.
+        
+        Flex container é o elemento que envolve sua estrutura. Você define que um elemento é um Flex Container com a propriedade display e valores flex ou inline-flex.
+        
+        
+          .flex-container {
+            display: flex;
+          }
+         
+
+
+
+
+
+
+
+
+
+
+
+
+        Flex Item são elementos-filhos do flex container.
+        
+        Eixos ou Axes são as duas direções básicas que existem em um Flex Container: main axis, ou eixo principal, e cross axis, ou eixo transversal.
+        Propriedades para o elemento-pai
+        
+        container flex
+        
+        Quando utilizamos o Flexbox, é muito importante saber quais propriedades são declaradas no elemento-pai (por exemplo, uma div que irá conter os elementos a serem alinhados) e quais serão declaradas nos elementos-filhos. Abaixo, seguem propriedades que devem ser declaradas utilizando o elemento-pai como seletor (para alinhar elementos-filhos):
+        
+        display
+        
+        Esta propriedade define um flex container; inline ou block dependendo dos valores passados. Coloca todos os elementos-filhos diretos num contexto Flex.
+        
+        .container {
+          display: flex; /* or inline-flex */
+        }
+        
+        Note que a propriedade de CSS columns não tem efeito em um flex container.
+        flex-direction
+        
+        Os ítens serão dispostos no leiaute seguindo ou o eixo principal ou o transversal.
+
+        Eixo principal: o eixo principal de um flex container é o eixo primário e ao longo dele são inseridos os flex items. Cuidado: O eixo principal não é necessariamente horizontal; vai depender da propriedade flex-direction (veja abaixo).
+    
+        main-start | main-end: os flex items são inseridos dentro do container começando pelo lado start, indo em direção ao lado end.
+    
+        Tamanho principal: A largura ou altura de um flex item, dependendo da direção do container, é o tamanho principal do ítem. A propriedade de tamanho principal de um flex item pode ser tanto width quanto height, dependendo de qual delas estiver na direção principal.
+    
+        Eixo transversal: O eixo perpendicular ao eixo principal é chamado de eixo transversal. Sua direção depende da direção do eixo principal.
+    
+        cross-start | cross-end: Linhas flex são preenchidas com ítens e adicionadas ao container, começando pelo lado cross start do flex container em direção ao lado cross end.
+    
+        cross size: A largura ou altura de um flex item, dependendo do que estiver na dimensão transversal, é o cross size do íten. A propriedade cross size pode ser tanto a largura quanto a altura do ítem, o que estiver na transversal.
+    
+    Flex container é o elemento que envolve sua estrutura. Você define que um elemento é um Flex Container com a propriedade display e valores flex ou inline-flex.
+
+    
+      .flex-container {
+        display: flex;
+      }
+    
+    Flex Item são elementos-filhos do flex container.
+    
+    Eixos ou Axes são as duas direções básicas que existem em um Flex Container: main axis, ou eixo principal, e cross axis, ou eixo transversal.
+    Propriedades para o elemento-pai
+    
+    container flex
+    
+    Quando utilizamos o Flexbox, é muito importante saber quais propriedades são declaradas no elemento-pai (por exemplo, uma div que irá conter os elementos a serem alinhados) e quais serão declaradas nos elementos-filhos. Abaixo, seguem propriedades que devem ser declaradas utilizando o elemento-pai como seletor (para alinhar elementos-filhos):
+    
+    display
+    
+    Esta propriedade define um flex container; inline ou block dependendo dos valores passados. Coloca todos os elementos-filhos diretos num contexto Flex.
+    
+    .container {
+      display: flex; /* or inline-flex */
+    }
+    
+    Note que a propriedade de CSS columns não tem efeito em um flex container.
+    flex-direction     
+
+    Os ítens serão dispostos no leiaute seguindo ou o eixo principal ou o transversal.
+
+    Eixo principal: o eixo principal de um flex container é o eixo primário e ao longo dele são inseridos os flex items. Cuidado: O eixo principal não é necessariamente horizontal; vai depender da propriedade flex-direction (veja abaixo).
+
+    main-start | main-end: os flex items são inseridos dentro do container começando pelo lado start, indo em direção ao lado end.
+
+    Tamanho principal: A largura ou altura de um flex item, dependendo da direção do container, é o tamanho principal do ítem. A propriedade de tamanho principal de um flex item pode ser tanto width quanto height, dependendo de qual delas estiver na direção principal.
+
+    Eixo transversal: O eixo perpendicular ao eixo principal é chamado de eixo transversal. Sua direção depende da direção do eixo principal.
+
+    cross-start | cross-end: Linhas flex são preenchidas com ítens e adicionadas ao container, começando pelo lado cross start do flex container em direção ao lado cross end.
+
+    cross size: A largura ou altura de um flex item, dependendo do que estiver na dimensão transversal, é o cross size do íten. A propriedade cross size pode ser tanto a largura quanto a altura do ítem, o que estiver na transversal.
+
+    Flex container é o elemento que envolve sua estrutura. Você define que um elemento é um Flex Container com a propriedade display e valores flex ou inline-flex.
+
+      .flex-container {
+        display: flex;
+      }
+
+    Flex Item são elementos-filhos do flex container.
+
+     
+            </section>
+        </div>
+        <footer class="fixed footer">FIXED FOOTER</footer>    
+    </div>
+</body>
+<script>
+
+  var flag = false;
+
+  document.getElementById('btnMenu').addEventListener('click', ()=>{
+    if(flag){
+      document.querySelector('.menu-label').style.display = "none";
+    }else{
+      document.querySelector('.menu-label').style.display = "inline";
+    }
+    flag = !flag;
+  })
+
+  function myAccFunc() {
+    var x = document.getElementById("demoAcc");
+    if (x.className.indexOf("w3-show") == -1) {
+      x.className += " w3-show";
+      x.previousElementSibling.className += " w3-green";
+    } else { 
+      x.className = x.className.replace(" w3-show", "");
+      x.previousElementSibling.className = 
+      x.previousElementSibling.className.replace(" w3-green", "");
+    }
+  }
+
+
+</script>
+</html>
