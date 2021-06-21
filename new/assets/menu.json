@@ -1,6 +1,6 @@
 {
 	"menu": [
-		{"modulo": "Flexibus",
+		{"modulo": "Home",
 		"link": "main.php",
 		"icone": "fa fa-home",
 		"id": "menuHome",

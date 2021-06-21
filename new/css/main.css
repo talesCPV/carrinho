@@ -47,7 +47,7 @@ li ul{
 .fixed{
     background: var(--cor-barra);            
     color:var(--font-barra);
-   padding: 0 30px;
+    padding: 0 30px;
 }
 
 .item{
@@ -141,13 +141,13 @@ li a:hover{
 }
 
 .screen{
-
-    background-color: rgb(193, 219, 211);
+    background-color: rgb(255, 255, 255);
     width: 80vw;
-    height: 90vh;
-    margin: auto;
+    height: calc(100vh - 200px);
+    margin: 90px auto;
+    margin-bottom: 900px;
     padding: 50px;
-
+    border-radius: 5px;
 }
 
 
@@ -162,9 +162,7 @@ li a:hover{
 }
 
 .menu-label{
-
   display: none;
-
 }
 
 .w3-bar-item{
