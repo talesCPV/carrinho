@@ -1,0 +1,138 @@
+
+    <div class="display title"><h1>Produtos</h1> </div>
+
+    <div class="display">  
+        <table>
+            <tr>
+                <td>
+                    <select name="cmbBusca" id="cmbBusca">
+                        <option value="p.descricao">Descrição</option>
+                        <option value="p.cod">Cod. Interno</option>
+                        <option value="p.cod_bar">Cod. Produto</option>
+                        <option value="p.cod_cli">Cod. Barras</option>
+                        <option value="e.nome">Fornecedor</option>
+                        <option value="serv">Serviço</option>
+                        <option value="conj">Conjuntos</option>
+                        <option value="tinta">Tintas</option>
+                        <option value="baixo">Estoque Baixo</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="edtBusca" placeholder="Busca">
+                </td>
+                <td>
+                    <button id="btnPesq">PESQUISAR</button>
+                </td>                
+                <td>
+                    <button id="btnNovo">NOVO</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="display main-content">    
+        <table class="search-table"> </table>        
+
+    </div>
+
+<script>
+
+    const btnNovo = document.getElementById("btnNovo");
+    const btnPesq = document.getElementById("btnPesq");
+    const edtBusca = document.getElementById('edtBusca');
+    const cmbBusca = document.getElementById('cmbBusca');
+    const table = document.querySelector('.search-table');
+
+    btnNovo.addEventListener("click", function(){
+        global_params = [];
+        openHTML("cad_prod.html","Cadastro de Produto","modal");    
+    });
+
+    cmbBusca.addEventListener("change", function(){
+
+        if(cmbBusca.value == 'serv'){
+            callQuery("pesq_prod",['p.tipo','SERVICO']);
+        }else if(cmbBusca.value == 'conj'){
+            callQuery("pesq_prod",['p.tipo','CONJ']);
+        }else if(cmbBusca.value == 'tinta'){
+            callQuery("pesq_prod",['p.tipo','TINTA']);
+        }else if(cmbBusca.value == 'baixo'){
+            callQuery("pesq_prod",['p.descricao',"%' AND p.estoque <= p.etq_min AND p.descricao LIKE '%"]);        
+        }
+
+    });
+
+
+    btnPesq.addEventListener("click", function(){
+
+        callQuery("pesq_prod",[cmbBusca.value,edtBusca.value]);
+
+    });
+
+
+    function callQuery(source,parans){
+
+        table.innerHTML = 
+            `<table>
+                <th>Cod</th><th>Descricao</th><th>Und.</th><th>Qtd</th><th>Cod. Prod.</th><th>Forn</th><th>Preço</th>
+            </table>`;
+
+        const resp = queryDB(source,parans);
+
+        resp.then(result =>{
+            let arr = JSON.parse(result);
+
+            arr.forEach((item)=>{
+                let row = document.createElement('tr');
+
+                item.forEach((field,index)=>{
+                    let td = document.createElement('td');
+                    td.innerHTML = field.toUpperCase();
+                    if([0,8,9].includes(index)){
+                        td.style.display = 'none';
+                    }
+                    row.appendChild(td);
+                });
+
+                table.appendChild(row);                
+            
+            });
+
+        });
+        resp.catch(error =>{
+            alert(error);
+        });
+
+
+        table.addEventListener("dblclick",(event)=>{
+            let target = event.target;
+            while (target.nodeName != 'TR') {
+                target = target.parentElement;
+            }
+            let row = target.cells; 
+
+
+            let id = row[0].firstChild ? row[0].firstChild.data : "" ;
+            let cod = row[1].firstChild ? row[1].firstChild.data : "" ;
+            let desc = row[2].firstChild ? row[2].firstChild.data : "" ;
+            let und = row[3].firstChild ? row[3].firstChild.data : "" ;
+            let etq = row[4].firstChild ? row[4].firstChild.data : "" ;
+            let codprod = row[5].firstChild ? row[5].firstChild.data : "" ;
+            let empresa = row[6].firstChild ? row[6].firstChild.data : "" ;
+            let preco = row[7].firstChild ? row[7].firstChild.data : "" ;
+            let ncm = row[8].firstChild ? row[8].firstChild.data : "" ;
+            let tipo = row[9].firstChild ? row[9].firstChild.data : "" ;
+        //       let salario = row[4].firstChild ? number(row[4].firstChild.data) : "" ;
+
+           
+            global_params = [id,cod,desc,und,etq,codprod,empresa,preco,ncm,tipo];
+            openHTML("show_prod.html","Detalhes do Produto","modal");
+
+
+        });
+
+
+    }
+
+
+</script>

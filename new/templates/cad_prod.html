@@ -1,0 +1,104 @@
+
+    <div class="display"> 
+        <table>
+            <tr><td><label>Descrição **</label></td></tr>
+            <tr><td><input type="text" id="edtDesc"  /></td></tr>
+            <tr><td><label>Fornecedor</label></td></tr>
+            <tr><td><select id="cmbEmp"></select></td></tr>
+            <tr><td><label>Unidade</label></td></tr>
+            <tr><td><select id="cmbUnid"></select></td></tr>
+            <tr><td><label >Estoque</label></td></tr>
+            <tr><td><input type="text" id="edtEtq" value="0"/></td></tr>
+            <tr><td><label >Tipo</label></td></tr>
+            <tr><td>
+                <select  id="cmbTipo"   >
+                    <option value="VENDA">Produto</option>
+                    <option value="CONJ">Conjunto</option>
+                    <option value="SERVICO">Serviço</option>
+                    <option value="TINTA">Tinta</option>
+                </select>
+                </td>
+            </tr>  
+            <tr><td><label>Estoque Min.</label></td></tr>
+            <tr><td><input type="text" id="edtEtqMin" value="0"  /></td></tr>
+            <tr><td><label >Cód. do Produto</label></td></tr>
+            <tr><td><input type="text" id="edtCodProd" class=""  /></td></tr>
+            <tr><td><label >Cód. de Barras</label></td></tr>
+            <tr><td><input type="text" id="edtCodBar" class=""  /></td></tr>
+            <tr><td><label >NCM</label></td></tr>
+            <tr><td><input type="text" id="edtNCM" onkeyup="return int_number(this)"  /></td></tr>
+            <tr><td><label >Preço de Compra R$</label></td></tr>
+            <tr><td><input type="text" id="edtCompra" onkeyup="return float_number(this)" value="0"/></td></tr>
+            <tr><td><label >Margem de Lucro %</label></td></tr>
+            <tr><td><input type="text" id="edtMargem" onkeyup="return float_number(this,1)" value="0"/></td></tr>
+            <tr><td><button id="btnSave">Salvar</button></td></tr>
+        </table>
+    </div>
+
+
+<script>
+
+
+    alert('entrou');
+
+    const btnSave = document.getElementById('btnSave');
+    const cmbEmp = document.getElementById('cmbEmp');
+    const cmbUnid = document.getElementById("cmbUnid");
+    const edtDesc = document.getElementById("edtDesc");
+    const edtEtq = document.getElementById("edtEtq");
+    const edtEtqMin = document.getElementById("edtEtqMin");
+    const cmbTipo = document.getElementById("cmbTipo");
+    const edtCodProd = document.getElementById("edtCodProd");
+    const edtCodBar = document.getElementById("edtCodBar");
+    const edtNCM = document.getElementById("edtNCM");
+    const edtCompra = document.getElementById("edtCompra");
+    const edtMargem = document.getElementById("edtMargem"); 
+
+//    fillCmb(cmbEmp,"pesq_emp",['tipo','FOR'],[1,0]);
+//    fillCmb(cmbUnid,"unidade",['nome',''],[1,2]);
+
+ 
+
+    if(global_params.length > 0){
+        alert (global_params[6]);
+        alert(global_params);
+        edtDesc.value = global_params[2];
+        edtEtq.value = global_params[4];
+        edtEtqMin.value  = global_params[2];
+        edtCodProd.value = global_params[5];
+        edtCodBar.value = global_params[2];
+        edtNCM.value = global_params[8];
+        edtCompra.value = global_params[2];
+        edtMargem.value = global_params[2];
+
+    }
+
+
+    btnSave.addEventListener('click',()=>{
+        saveProd();
+    });
+
+    function saveProd(){
+    const query = queryDB('next_cod',['tb_produto','cod',"WHERE tipo NOT LIKE '%TINTA%'"]);
+
+    query.then(result =>{
+        const edtCod = JSON.parse(result);
+
+
+        let fields = [cmbEmp.value,edtDesc.value,edtEtq.value,edtEtqMin.value,cmbUnid.value, edtNCM.value, edtCod, edtCodProd.value, edtCompra.value, edtMargem.value, cmbTipo.value, edtCodBar.value];
+
+//        alert(fields);
+
+        queryDB("new_prod",fields);
+        modal.style.display = "none";
+
+    });
+    query.catch(error =>{
+        alert(error);
+    });
+        
+}
+
+
+
+</script>

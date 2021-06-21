@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+        @import url(https://fonts.googleapis.com/css?family=Raleway);
 
+        :root{
+            --cor-barra:#FFFFFF;
+            --font-barra:#666666;
+            --cor-menu:#30363E;
+            --font-menu:#FFFFFF;
+            --cor-section:#EEEEEE;
+            --font-section:#000000;
+        }
 
         *{
             margin: 0;
@@ -15,21 +25,24 @@
             text-decoration: none;
             background: transparent;
             color: #000000;
+            font-family: 'Raleway';
+            font-size: 18px;
+        }
+
+        nav > *, a{
+            background:var(--cor-menu);
+            color: var(--font-menu);
         }
 
         nav{
             display: flex;
             height: 100%;
-            transition: all .5s;
-      
         }
 
         .menu-aba{
             position: relative;
             order: 1;
             top: 10vh;
-            background-color: crimson;
-            color: burlywood;
             padding: 0 15px 0 30px;
             height: 150px;
             width: 30px;
@@ -38,18 +51,16 @@
             cursor: pointer;
             writing-mode: vertical-rl;
             text-align: center;
-            transition: all .5s;
         }
 
         .menu-bar{
             order: 0;
-            background-color: crimson;
-            padding: 20px 10px 0 20px;
-            color: black;
+            padding: 20px 0 0 0;
             height: 100vh;
-            display: none;
-            width: 5px;
-            transition: all .5s;
+            width: 0;
+            overflow:hidden;
+            transition:width .1s linear;
+            z-index:1000;
         }
 
         .sub-menu{
@@ -62,8 +73,9 @@
             display: block;
         }
 
-        li:hover{
-            background-color: aquamarine;
+        li a:hover{
+            background:var(--cor-section);
+            color: var(--font-section);
             cursor: pointer;
         }
 
@@ -81,26 +93,26 @@
             <ul>
                 <li><a href="#norte">Norte</a> 
                     <ul id="norte" class="sub-menu">
-                        <li>Acre</li>
-                        <li>Amapá</li>
-                        <li>Amazonas</li>
-                        <li>Pará</li>
-                        <li>Rondônia</li>
-                        <li>Rondônia</li>
-                        <li>Tocantins</li>
+                        <li><a href="#">Acre</a></li>
+                        <li><a href="#">Amapá</a></li>
+                        <li><a href="#">Amazonas</a></li>
+                        <li><a href="#">Pará</a></li>
+                        <li><a href="#">Rondônia</a></li>
+                        <li><a href="#">Rorâima</a></li>
+                        <li><a href="#">Tocantins</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Nordeste</a></li>
-                    <ul class="sub-menu">
-                        <li>Maranhão</li>
-                        <li>Piaui</li>
-                        <li>Bahia</li>
-                        <li>Ceará</li>
-                        <li>Pernambuco</li>
-                        <li>Paraíba</li>
-                        <li>Alagoas</li>
-                        <li>Rio Grande do Norte</li>
-                        <li>Sergipe</li>
+                <li><a href="#nordeste">Nordeste</a></li>
+                    <ul id="nordeste" class="sub-menu">
+                        <li><a href="#">Maranhão</a></li>
+                        <li><a href="#">Piaui</a></li>
+                        <li><a href="#">Bahia</a></li>
+                        <li><a href="#">Ceará</a></li>
+                        <li><a href="#">Pernambuco</a></li>
+                        <li><a href="#">Paraíba</a></li>
+                        <li><a href="#">Alagoas</a></li>
+                        <li><a href="#">Rio Grande do Norte</a></li>
+                        <li><a href="#">Sergipe</a></li>
                     </ul>
                 <li><a href="#">Centro-Oeste</a></li>
                 <li><a href="#">Sudeste</a></li>
@@ -118,12 +130,13 @@
         console.log(menu.style.width)
 
 
-        if(menu.style.display == "none" || menu.style.width == "" ){
-            menu.style.display =  "block";
-            menu.style.width =  "auto";
+        if(menu.style.width == "0px" || menu.style.width == "" ){
+            menu.style.width =  "150px";
+            menu.style.padding =  "20px 0 0 20px";
         }else{
-            menu.style.display =  "none";
-            menu.style.width =  "5px";
+            menu.style.width =  "0";
+            menu.style.padding =  "20px 0 0 0";
+
         }
 
 

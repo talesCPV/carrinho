@@ -1,0 +1,172 @@
+:root{
+    --font-barra:#FFFFFF;
+    --cor-barra:#666666;
+    --cor-menu:#30363E;
+    --font-menu:#FFFFFF;
+    --cor-section:#EEEEEE;
+    --font-section:#000000;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Raleway';
+    font-size: 15px;
+}
+
+html, body{
+    height: 100%;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li ul{
+  border-left: solid blanchedalmond 5px;
+  padding-left: 5px;
+}
+
+.wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.fixed{
+    background: var(--cor-barra);            
+    color:var(--font-barra);
+   padding: 0 30px;
+}
+
+.item{
+    width: 100%;
+    height: auto;
+    margin: 0 ;
+    padding: 50px 0;
+    margin: 0 ;
+    overflow: auto;
+}
+
+/* MENU */
+
+.side-bar{
+  display: flex;
+  color:var(--font-menu);
+  width: auto;
+
+}
+
+.side-barv > *, a{
+    
+    color: var(--font-menu);
+}
+
+.menu-aba{
+  background-color: crimson;
+    position: relative;
+    order: 1;
+    top: 10vh;
+    padding: 0 15px 0 30px;
+    height: 150px;
+    width: 30px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    cursor: pointer;
+    writing-mode: vertical-rl;
+    text-align: center;
+}
+
+.menu-bar{
+  background-color: crimson;
+    order: 0;
+    padding: 20px 0 0 0;
+    height: calc(100vh - 100px);
+    width: 0;
+    overflow:hidden;
+    transition:width .1s linear;
+
+}
+
+.sub-menu{
+    display: none;
+    padding-left: 20px;
+
+}
+
+.sub-menu:target{
+    display: block;
+}
+
+li a:hover{
+    background:var(--cor-section);
+    color: var(--font-section);
+    opacity: 0.5;
+    
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menu-aba:target{
+    display: none;
+}
+
+
+/* FIM MENU */
+.main{
+    display: flex;
+    height: 100%;
+    width: auto;
+
+}
+.menu{
+    position: fixed;            
+    top: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.screen{
+
+    background-color: rgb(193, 219, 211);
+    width: 80vw;
+    height: 90vh;
+    margin: auto;
+    padding: 50px;
+
+}
+
+
+.footer{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    align-items: center;       
+    justify-content: center;           
+}
+
+.menu-label{
+
+  display: none;
+
+}
+
+.w3-bar-item{
+padding: 0;
+}

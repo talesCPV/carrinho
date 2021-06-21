@@ -22,7 +22,7 @@
 					},
 		 			{
 						"nome": "Produtos",
-						"link": "cad_prod.php",
+						"link": "cad_prod.html",
 						"id": "menuCadProd",
 						"icone": "fa fa-archive",
 						"perm": [10,4,3]
