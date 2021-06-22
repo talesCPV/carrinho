@@ -5,6 +5,8 @@
 	if (IsSet($_POST["query"])){
 	      $query = $_POST["query"];
 
+//		echo $query;
+
 		$result = mysqli_query($conexao, $query);
 
 		$qtd_lin = $result->num_rows;

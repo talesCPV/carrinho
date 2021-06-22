@@ -111,13 +111,9 @@ function loadMenu(){
 
 // *********    AJAX FUNCTION    **********    
 
-function queryDB(source,parans){        
+function queryDB(data){        
 
-    const data = new URLSearchParams();
-    data.append('source',source);
-    for(let i=0; i<parans.length; i++){
-        data.append('param_'+i,parans[i]);
-    }
+//  data =  new URLSearchParams();
 
     const myRequest = new Request('ajax/ajax.php',{
         method: 'POST',
@@ -201,22 +197,51 @@ function int_number(campo){
 // *********    POPULATION FIELDS    **********
 
 // fill combobox with query from DB (combobox, ajax source, query params, index params (option.innerHTML, option.value))
-function fillCmb(select,source,params,index_params){
-    const query = queryDB(source,params);
-
-    query.then(result =>{
+function fillCmb(select, table, field1, field2=field1, where=""){
+    const query = `SELECT ${field1}, ${field2} FROM ${table} ${where}`;
+    const data = new URLSearchParams();
+    data.append('query', query);
+    const resp = queryDB(data);
+    resp.then((result)=>{
         let arr = JSON.parse(result);
-
         arr.forEach((item)=>{
             let op = document.createElement('option');
-            op.innerHTML = item[index_params[0]].toUpperCase();
-            op.value = item[index_params[1]];
+            op.innerHTML = item[field2].toUpperCase();
+            op.value = item[field1];
             select.appendChild(op);        
-        });
+        });    
+    })     
+}
 
+function fillCmbTxt(select, path){
+
+    const data = new URLSearchParams();
+    data.append('path', path);
+
+    const myRequest = new Request('ajax/load_files.php',{
+        method: 'POST',
+        body: data
     });
-    query.catch(error =>{
-        alert(error);
+
+    const myPromisse = new Promise((resolve,reject) =>{
+        fetch(myRequest)
+        .then(function (response){
+            if (response.status === 200) { 
+                resolve(response.text());
+            } else { 
+                reject(new Error("Houve algum erro na comunicação com o servidor"));
+            } 
+        });
     });
-        
+//        return myPromisse;
+    myPromisse.then((resolve)=>{
+
+        const arr = resolve.split('\n');
+        arr.forEach((item)=>{
+            let op = document.createElement('option');
+            op.innerHTML = item.toUpperCase();
+            op.value = item.toUpperCase();
+            select.appendChild(op);        
+        });    
+    })
 }

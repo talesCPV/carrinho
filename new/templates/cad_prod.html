@@ -57,27 +57,20 @@
     const edtCompra = document.getElementById("edtCompra");
     const edtMargem = document.getElementById("edtMargem"); 
 
-    let emp = localStorage.getItem("empresas");
-
-    console.log(emp);
-
-
-//    fillCmb(cmbEmp,"pesq_emp",['tipo','FOR'],[1,0]);
-//    fillCmb(cmbUnid,"unidade",['nome',''],[1,2]);
-
+    fillCmb(cmbEmp,'tb_empresa','id','nome','WHERE tipo="FOR"');
+    fillCmbTxt(cmbUnid,'../assets/unidades.txt');
 
 
     btnSave.addEventListener('click',(event)=>{
         event.preventDefault;
 
 
-        //        saveProd();
-
-        alert(3)
     });
 
     function saveProd(){
-    const query = queryDB('next_cod',['tb_produto','cod',"WHERE tipo NOT LIKE '%TINTA%'"]);
+
+        const query = `INSERT INTO tb_produto`;
+
 
     query.then(result =>{
         const edtCod = JSON.parse(result);
