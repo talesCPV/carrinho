@@ -1,34 +1,77 @@
 
-    <div class="display title"><h1>Produtos</h1> </div>
+    
+
+
+    <div class="w3-container w3-blue">
+        <h2 class="w3-center"> Produtos</h2>
+    </div>
+      
+
+      <div class="display">
+      <form class="w3-container">
+        <p>
+            <label>Busca por:</label>
+            <select class="w3-input" name="cmbBusca" id="cmbBusca">
+                <option value="p.descricao">Descrição</option>
+                <option value="p.cod">Cod. Interno</option>
+                <option value="p.cod_bar">Cod. Produto</option>
+                <option value="p.cod_cli">Cod. Barras</option>
+                <option value="e.nome">Fornecedor</option>
+                <option value="serv">Serviço</option>
+                <option value="conj">Conjuntos</option>
+                <option value="tinta">Tintas</option>
+                <option value="baixo">Estoque Baixo</option>
+            </select>
+            <input class="w3-input" type="text" placeholder="DESCRIÇÃO">
+        </p>
+        <p>
+            <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnNovo">+</button>
+            <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnPesq"><i class="fa fa-search"></i></button>
+        </p>
+
+      </form>
+    </div>
+
 
     <div class="display">  
-        <table>
-            <tr>
-                <td>
-                    <select name="cmbBusca" id="cmbBusca">
-                        <option value="p.descricao">Descrição</option>
-                        <option value="p.cod">Cod. Interno</option>
-                        <option value="p.cod_bar">Cod. Produto</option>
-                        <option value="p.cod_cli">Cod. Barras</option>
-                        <option value="e.nome">Fornecedor</option>
-                        <option value="serv">Serviço</option>
-                        <option value="conj">Conjuntos</option>
-                        <option value="tinta">Tintas</option>
-                        <option value="baixo">Estoque Baixo</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" id="edtBusca" placeholder="Busca">
-                </td>
-                <td>
-                    <button id="btnPesq">PESQUISAR</button>
-                </td>                
-                <td>
-                    <button id="btnNovo">NOVO</button>
-                </td>
-            </tr>
-        </table>
+
     </div>
+
+<!--
+    <form class="w3-container">
+
+        <label >Descrição *</label>
+        <input class="w3-input w3-margin-bottom" type="text" id="edtDesc"  />
+        <label >Fornecedor</label>
+        <select class="w3-input w3-margin-bottom" id="cmbEmp"></select>
+        <label >Unidade</label>
+        <select class="w3-input w3-margin-bottom" id="cmbUnid"></select>
+        <label >Estoque</label>
+        <input class="w3-input w3-margin-bottom" type="text" id="edtEtq" value="0"/>
+        <label>Tipo</label>
+        <select class="w3-input w3-margin-bottom"  id="cmbTipo"   >
+            <option value="VENDA">Produto</option>
+            <option value="CONJ">Conjunto</option>
+            <option value="SERVICO">Serviço</option>
+            <option value="TINTA">Tinta</option>
+        </select>
+        <label>Estoque Min.</label>
+        <input class="w3-input w3-margin-bottom" type="text" id="edtEtqMin" value="0"  />
+        <label >Cód. do Produto</label>
+        <input class="w3-input w3-margin-bottom" type="text" id="edtCodProd" class=""  />
+        <label >Cód. de Barras</label>
+        <input class="w3-input w3-margin-bottom" type="text" id="edtCodBar" class=""  />
+        <label >NCM</label>
+        <input class="w3-input w3-margin-bottom" type="text" id="edtNCM" onkeyup="return int_number(this)"  />
+        <label >Preço de Compra R$</label>
+        <input class="w3-input w3-margin-bottom" type="text" id="edtCompra" onkeyup="return float_number(this)" value="0"/>
+        <label >Margem de Lucro %</label>
+        <input class="w3-input w3-margin-bottom" type="text" id="edtMargem" onkeyup="return float_number(this,1)" value="0"/>
+        <button class="w3-button w3-green w3-round-large w3-margin-bottom w3-right" id="btnSave">Salvar</button>
+
+
+    </form> 
+-->
 
     <div class="display main-content">    
         <table class="search-table"> </table>        

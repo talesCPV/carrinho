@@ -2,8 +2,6 @@ loadMenu();
 
 var flag = false;
 
-let btnTeste = document.getElementById('btnTeste');
-
 const d = new Date();
 document.querySelector('.footer').innerHTML =  `Caçapava, ${('0' + d.getDate()).slice(-2) }/${('0' + (d.getMonth() + 1)).slice(-2) }/${d.getFullYear()} `  ;
 document.querySelector('.data-user').innerHTML = localStorage.getItem("nome")   ;
@@ -28,7 +26,6 @@ document.querySelector('.menu-aba').addEventListener('click',()=>{
         
         if(where == "window"){
             main.innerHTML = text;
-            console.log(main)
             let script = main.getElementsByTagName('script');
             eval(script[0].innerHTML);
         }else{
@@ -74,7 +71,6 @@ function loadMenu(){
             const ul =  document.createElement('ul');
 
             for(let i=0; i<menu_json.length; i++){
-                console.log(menu_json[i]);
 
                 const li =  document.createElement('li');
                 const a =  document.createElement('a');

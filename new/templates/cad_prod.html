@@ -63,31 +63,29 @@
 
     btnSave.addEventListener('click',(event)=>{
         event.preventDefault;
-
-
+        saveProd();
     });
 
     function saveProd(){
 
-        const query = `INSERT INTO tb_produto`;
+        const query = `INSERT INTO tb_produto SET
+                        cod = (SELECT MAX(p.cod)+1 FROM tb_produto as p WHERE p.cod < 7000),
+                        id_emp = ${cmbEmp.value},
+                        descricao = '${edtDesc.value}',
+                        estoque = ${edtEtq.value},
+                        etq_min = ${edtEtqMin.value},
+                        unidade = '${cmbUnid.value}',
+                        ncm = '${edtNCM.value}',
+                        cod_bar = '${edtCodProd.value}',
+                        preco_comp = ${edtCompra.value},
+                        margem = ${edtMargem.value},
+                        tipo = '${cmbTipo.value}',
+                        cod_cli = '${edtCodBar.value}' ;`;
 
-
-    query.then(result =>{
-        const edtCod = JSON.parse(result);
-
-
-        let fields = [cmbEmp.value,edtDesc.value,edtEtq.value,edtEtqMin.value,cmbUnid.value, edtNCM.value, edtCod, edtCodProd.value, edtCompra.value, edtMargem.value, cmbTipo.value, edtCodBar.value];
-
-//        alert(fields);
-
-        queryDB("new_prod",fields);
-        modal.style.display = "none";
-
-    });
-    query.catch(error =>{
-        alert(error);
-    });
-        
+        const data = new URLSearchParams();
+        data.append('query', query);                        
+        queryDB(data);
+       
 }
 
 

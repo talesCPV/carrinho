@@ -124,6 +124,7 @@ li a:hover{
 
 
 /* FIM MENU */
+
 .main{
     display: flex;
     height: 100%;
@@ -150,7 +151,6 @@ li a:hover{
     border-radius: 5px;
 }
 
-
 .footer{
     display: flex;
     position: fixed;
@@ -163,6 +163,19 @@ li a:hover{
 
 .menu-label{
   display: none;
+}
+
+.display{
+    width: 100%;
+    border: solid black 2px;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+.w3-button{
+    margin: 15px 5px;
+
 }
 
 .w3-bar-item{

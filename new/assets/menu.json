@@ -73,7 +73,7 @@
 
 		 			{
 						"nome": "Produtos",
-						"link": "pesq_prod.php",
+						"link": "produto.html",
 						"id": "menuPesqProd",
 						"icone": "fa fa-archive",
 						"perm": [10,4,3]
