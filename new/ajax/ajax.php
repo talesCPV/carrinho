@@ -5,7 +5,7 @@
 	if (IsSet($_POST["query"])){
 	      $query = $_POST["query"];
 
-//		echo $query;
+		//echo $query;
 
 		$result = mysqli_query($conexao, $query);
 

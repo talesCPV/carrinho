@@ -1,18 +1,14 @@
 
-    
-
-
-    <div class="w3-container w3-blue">
+    <div class="display w3-container ">
         <h2 class="w3-center"> Produtos</h2>
-    </div>
-      
+    </div>      
 
-      <div class="display">
-      <form class="w3-container">
-        <p>
-            <label>Busca por:</label>
+    <div class="display">
+    <form class="w3-container">
+        <p style="display: flex">
+       
             <select class="w3-input" name="cmbBusca" id="cmbBusca">
-                <option value="p.descricao">Descrição</option>
+                <option value= "p.descricao" >Descrição</option>
                 <option value="p.cod">Cod. Interno</option>
                 <option value="p.cod_bar">Cod. Produto</option>
                 <option value="p.cod_cli">Cod. Barras</option>
@@ -22,60 +18,18 @@
                 <option value="tinta">Tintas</option>
                 <option value="baixo">Estoque Baixo</option>
             </select>
-            <input class="w3-input" type="text" placeholder="DESCRIÇÃO">
+            <input id="edtBusca" class="w3-input" type="text" placeholder="Busca">
         </p>
         <p>
             <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnNovo">+</button>
             <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnPesq"><i class="fa fa-search"></i></button>
         </p>
-
-      </form>
+    </form>
     </div>
 
 
-    <div class="display">  
-
-    </div>
-
-<!--
-    <form class="w3-container">
-
-        <label >Descrição *</label>
-        <input class="w3-input w3-margin-bottom" type="text" id="edtDesc"  />
-        <label >Fornecedor</label>
-        <select class="w3-input w3-margin-bottom" id="cmbEmp"></select>
-        <label >Unidade</label>
-        <select class="w3-input w3-margin-bottom" id="cmbUnid"></select>
-        <label >Estoque</label>
-        <input class="w3-input w3-margin-bottom" type="text" id="edtEtq" value="0"/>
-        <label>Tipo</label>
-        <select class="w3-input w3-margin-bottom"  id="cmbTipo"   >
-            <option value="VENDA">Produto</option>
-            <option value="CONJ">Conjunto</option>
-            <option value="SERVICO">Serviço</option>
-            <option value="TINTA">Tinta</option>
-        </select>
-        <label>Estoque Min.</label>
-        <input class="w3-input w3-margin-bottom" type="text" id="edtEtqMin" value="0"  />
-        <label >Cód. do Produto</label>
-        <input class="w3-input w3-margin-bottom" type="text" id="edtCodProd" class=""  />
-        <label >Cód. de Barras</label>
-        <input class="w3-input w3-margin-bottom" type="text" id="edtCodBar" class=""  />
-        <label >NCM</label>
-        <input class="w3-input w3-margin-bottom" type="text" id="edtNCM" onkeyup="return int_number(this)"  />
-        <label >Preço de Compra R$</label>
-        <input class="w3-input w3-margin-bottom" type="text" id="edtCompra" onkeyup="return float_number(this)" value="0"/>
-        <label >Margem de Lucro %</label>
-        <input class="w3-input w3-margin-bottom" type="text" id="edtMargem" onkeyup="return float_number(this,1)" value="0"/>
-        <button class="w3-button w3-green w3-round-large w3-margin-bottom w3-right" id="btnSave">Salvar</button>
-
-
-    </form> 
--->
-
-    <div class="display main-content">    
-        <table class="search-table"> </table>        
-
+    <div class="display main-content">  
+        <table id="query-table" class="w3-table-all w3-hoverable"> </table>        
     </div>
 
 <script>
@@ -84,98 +38,93 @@
     const btnPesq = document.getElementById("btnPesq");
     const edtBusca = document.getElementById('edtBusca');
     const cmbBusca = document.getElementById('cmbBusca');
-    const table = document.querySelector('.search-table');
+    const table = document.getElementById('query-table');
 
-    btnNovo.addEventListener("click", function(){
-        global_params = [];
-        openHTML("cad_prod.html","Cadastro de Produto","modal");    
+    btnNovo.addEventListener("click", function(event){
+        event.preventDefault();
+        modal_title.innerHTML = " Novo Título";
+        modal_text.innerHTML = " Algum texto por aqui";
+        openHTML('cad_prod.html','modal','Cadastro de Novo Produto');     
+        modal.style.display = "block";        
     });
 
-    cmbBusca.addEventListener("change", function(){
+    btnPesq.addEventListener("click", function(event){
+        event.preventDefault();
+        table.innerHTML = "";
 
-        if(cmbBusca.value == 'serv'){
-            callQuery("pesq_prod",['p.tipo','SERVICO']);
-        }else if(cmbBusca.value == 'conj'){
-            callQuery("pesq_prod",['p.tipo','CONJ']);
-        }else if(cmbBusca.value == 'tinta'){
-            callQuery("pesq_prod",['p.tipo','TINTA']);
-        }else if(cmbBusca.value == 'baixo'){
-            callQuery("pesq_prod",['p.descricao',"%' AND p.estoque <= p.etq_min AND p.descricao LIKE '%"]);        
-        }
+        const query = `SELECT p.id, p.cod, p.descricao, p.unidade, p.estoque, p.cod_bar, e.nome, p.preco_comp, p.margem, p.ncm, p.tipo 
+                        FROM tb_produto AS p 
+                        INNER JOIN tb_empresa AS e 
+                        ON  ${cmbBusca.value} LIKE '%${edtBusca.value}%'
+                        AND p.id_emp = e.id 
+                        ORDER BY cast(p.cod as unsigned integer)`;
 
-    });
+        const data = new URLSearchParams();        
+        data.append("query", query);
 
+//        console.log(query)
 
-    btnPesq.addEventListener("click", function(){
+        const resp = queryDB(data);
+        resp.then((response)=>{
+            const hide = [0,5,8,9,10];
+            const money = [7];
+            const dt = [];
 
-        callQuery("pesq_prod",[cmbBusca.value,edtBusca.value]);
-
-    });
-
-
-    function callQuery(source,parans){
-
-        table.innerHTML = 
-            `<table>
-                <th>Cod</th><th>Descricao</th><th>Und.</th><th>Qtd</th><th>Cod. Prod.</th><th>Forn</th><th>Preço</th>
-            </table>`;
-
-        const resp = queryDB(source,parans);
-
-        resp.then(result =>{
-            let arr = JSON.parse(result);
-
-            arr.forEach((item)=>{
-                let row = document.createElement('tr');
-
-                item.forEach((field,index)=>{
-                    let td = document.createElement('td');
-                    td.innerHTML = field.toUpperCase();
-                    if([0,8,9].includes(index)){
-                        td.style.display = 'none';
+            let arr = JSON.parse(response);           
+            arr.forEach((item,i)=>{
+                if(i==0){
+                    const tr = document.createElement('tr');
+                    tr.innerHTML="<th>Cod.</th><th>Descrição</th><th>Und.</th><th>Qtd.</th><th>Fornecedor</th><th>Preço</th>"
+                    table.appendChild(tr);
+                }
+                const tr = document.createElement('tr');
+                let index = 0;
+                for (var prop in item) {
+                    const td = document.createElement('td');
+                    td.innerHTML = item[prop].toUpperCase();
+                    if(hide.includes(index)){
+                        td.style="display:none;"
                     }
-                    row.appendChild(td);
-                });
+                    if(money.includes(index)){
+                        td.innerHTML='R$'+parseFloat(item[prop]).toFixed(2);                        
+                    }
+                    
+                    tr.appendChild(td);
+                    index++;
+                }     
+                tr.addEventListener('click',()=>{
+                    tableClick(tr);
+                })
+                table.appendChild(tr);
 
-                table.appendChild(row);                
-            
-            });
+            });  
+        })
 
-        });
-        resp.catch(error =>{
-            alert(error);
-        });
-
-
-        table.addEventListener("dblclick",(event)=>{
-            let target = event.target;
-            while (target.nodeName != 'TR') {
-                target = target.parentElement;
-            }
-            let row = target.cells; 
+    });
 
 
-            let id = row[0].firstChild ? row[0].firstChild.data : "" ;
-            let cod = row[1].firstChild ? row[1].firstChild.data : "" ;
-            let desc = row[2].firstChild ? row[2].firstChild.data : "" ;
-            let und = row[3].firstChild ? row[3].firstChild.data : "" ;
-            let etq = row[4].firstChild ? row[4].firstChild.data : "" ;
-            let codprod = row[5].firstChild ? row[5].firstChild.data : "" ;
-            let empresa = row[6].firstChild ? row[6].firstChild.data : "" ;
-            let preco = row[7].firstChild ? row[7].firstChild.data : "" ;
-            let ncm = row[8].firstChild ? row[8].firstChild.data : "" ;
-            let tipo = row[9].firstChild ? row[9].firstChild.data : "" ;
-        //       let salario = row[4].firstChild ? number(row[4].firstChild.data) : "" ;
+    function tableClick(tr){
 
-           
-            global_params = [id,cod,desc,und,etq,codprod,empresa,preco,ncm,tipo];
-            openHTML("show_prod.html","Detalhes do Produto","modal");
+        console.log(tr.cells)
+    
+        let params = `${tr.cells[0].innerHTML}&${tr.cells[1].innerHTML}&${tr.cells[2].innerHTML}&${tr.cells[3].innerHTML}&${tr.cells[4].innerHTML}&${tr.cells[5].innerHTML}&${tr.cells[6].innerHTML}&${tr.cells[7].innerHTML}&${tr.cells[8].innerHTML}&${tr.cells[9].innerHTML}&${tr.cells[10].innerHTML}`;
+        
+        localStorage.setItem("params",params);
 
 
-        });
+//        console.log(params)
+/*
+        for (let i=0; i<tr.cells.length; i++) {
 
+            console.log(tr.cells[i].innerHTML)
+
+        }
+*/
+
+        openHTML('show_prod.html','modal','Detalhes do Produto'); 
 
     }
+
 
 
 </script>

@@ -19,25 +19,30 @@
 </div>
 
 <script>
+
+    const arr = localStorage.getItem("params").split("&");
+
+    console.log(arr);
+
     const btnEditar = document.getElementById("btnEditar");
     const btnDel = document.getElementById("btnDel");
 
     btnEditar.addEventListener("click",()=>{
-        openHTML("cad_prod.html","Cadastro de Produto","modal"); 
+        openHTML("cad_prod.html","modal","Cadastro de Produto"); 
     });
     btnDel.addEventListener("click",()=>{
         alert("Deletar");
     });
 
-    if(global_params.length > 0){
-        document.getElementById('tdCod').innerHTML = global_params[1].toUpperCase();
-        document.getElementById('tdDesc').innerHTML = global_params[2].toUpperCase();
-        document.getElementById('tdUnd').innerHTML = global_params[3].toUpperCase();
-        document.getElementById('tdEtq').innerHTML = global_params[4].toUpperCase();
-        document.getElementById('tdCodProd').innerHTML = global_params[5].toUpperCase();
-        document.getElementById('tdForn').innerHTML = global_params[6].toUpperCase();
-        document.getElementById('tdPreco').innerHTML = global_params[7].toUpperCase();
-        document.getElementById('tdNCM').innerHTML = global_params[8].toUpperCase();
+    if(arr.length > 0){
+        document.getElementById('tdCod').innerHTML = arr[1].toUpperCase();
+        document.getElementById('tdDesc').innerHTML = arr[2].toUpperCase();
+        document.getElementById('tdUnd').innerHTML = arr[3].toUpperCase();
+        document.getElementById('tdEtq').innerHTML = arr[4].toUpperCase();
+        document.getElementById('tdCodProd').innerHTML = arr[5].toUpperCase();
+        document.getElementById('tdForn').innerHTML = arr[6].toUpperCase();
+        document.getElementById('tdPreco').innerHTML = arr[7].toUpperCase();
+        document.getElementById('tdNCM').innerHTML = arr[8].toUpperCase();
     }
 
 /*
