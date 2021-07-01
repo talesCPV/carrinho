@@ -44,6 +44,17 @@
 
 <script>
 
+    const arr = localStorage.getItem("params");
+    
+    let fields = [];
+
+
+    if(arr != null){
+        fields = arr.split("&");
+    }
+
+//    console.log(fields.length);
+
     const btnSave = document.getElementById('btnSave');
     const cmbEmp = document.getElementById('cmbEmp');
     const cmbUnid = document.getElementById("cmbUnid");
@@ -59,6 +70,13 @@
 
     fillCmb(cmbEmp,'tb_empresa','id','nome','WHERE tipo="FOR"');
     fillCmbTxt(cmbUnid,'../assets/unidades.txt');
+
+    if(fields.length > 0){
+        edtDesc.value = fields[2];
+        edtEtq.value = fields[4];
+
+
+    }
 
 
     btnSave.addEventListener('click',(event)=>{

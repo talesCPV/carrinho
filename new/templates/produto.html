@@ -13,16 +13,16 @@
                 <option value="p.cod_bar">Cod. Produto</option>
                 <option value="p.cod_cli">Cod. Barras</option>
                 <option value="e.nome">Fornecedor</option>
-                <option value="serv">Serviço</option>
-                <option value="conj">Conjuntos</option>
-                <option value="tinta">Tintas</option>
+                <option value="SERVICO">Serviço</option>
+                <option value="CONJ">Conjuntos</option>
+                <option value="TINTA">Tintas</option>
                 <option value="baixo">Estoque Baixo</option>
             </select>
             <input id="edtBusca" class="w3-input" type="text" placeholder="Busca">
         </p>
         <p>
-            <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnNovo">+</button>
             <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnPesq"><i class="fa fa-search"></i></button>
+            <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnNovo">+</button>
         </p>
     </form>
     </div>
@@ -42,6 +42,7 @@
 
     btnNovo.addEventListener("click", function(event){
         event.preventDefault();
+        localStorage.removeItem("params");
         modal_title.innerHTML = " Novo Título";
         modal_text.innerHTML = " Algum texto por aqui";
         openHTML('cad_prod.html','modal','Cadastro de Novo Produto');     
@@ -50,12 +51,28 @@
 
     btnPesq.addEventListener("click", function(event){
         event.preventDefault();
-        table.innerHTML = "";
+        table.innerHTML = "";        
+        const like = ['p.descricao','e.nome','p.cod_bar'];
+        const tipo = ['SERVICO','CONJ','TINTA'];
+        const baixo = ['baixo'];
 
-        const query = `SELECT p.id, p.cod, p.descricao, p.unidade, p.estoque, p.cod_bar, e.nome, p.preco_comp, p.margem, p.ncm, p.tipo 
+        let where ;
+
+        if(like.includes(cmbBusca.value)){
+            where = `${cmbBusca.value} LIKE '%${edtBusca.value}%' `;
+        } else if(tipo.includes(cmbBusca.value)){
+            where = ` p.tipo = '${cmbBusca.value}' `;
+        } else if(baixo.includes(cmbBusca.value)){
+            where = 'p.etq_min >= p.estoque ';
+        }else{
+            where = `${cmbBusca.value} = '${edtBusca.value}'`;
+        }
+
+
+        const query = `SELECT p.id, p.cod, p.descricao, p.unidade, p.estoque, p.cod_bar, e.nome, p.preco_comp, p.margem, p.ncm, p.tipo, p.etq_min, p.id_emp, p.cod_cli 
                         FROM tb_produto AS p 
                         INNER JOIN tb_empresa AS e 
-                        ON  ${cmbBusca.value} LIKE '%${edtBusca.value}%'
+                        ON  ${where}
                         AND p.id_emp = e.id 
                         ORDER BY cast(p.cod as unsigned integer)`;
 
@@ -66,10 +83,9 @@
 
         const resp = queryDB(data);
         resp.then((response)=>{
-            const hide = [0,5,8,9,10];
+            const hide = [0,5,7,8,9,10,11,12,13];
             const money = [7];
-            const dt = [];
-
+            const perc = [8];
             let arr = JSON.parse(response);           
             arr.forEach((item,i)=>{
                 if(i==0){
@@ -81,17 +97,37 @@
                 let index = 0;
                 for (var prop in item) {
                     const td = document.createElement('td');
-                    td.innerHTML = item[prop].toUpperCase();
+                    if(item[prop] != null){
+                        td.innerHTML = item[prop].toUpperCase();
+                    }else{
+                        td.innerHTML = '';
+                    }
+
                     if(hide.includes(index)){
                         td.style="display:none;"
                     }
                     if(money.includes(index)){
-                        td.innerHTML='R$'+parseFloat(item[prop]).toFixed(2);                        
-                    }
-                    
-                    tr.appendChild(td);
+                        td.innerHTML = 'R$'+parseFloat(td.innerHTML).toFixed(2)
+                    }        
+                    if(perc.includes(index)){
+                        td.innerHTML += '%'; 
+                    }                                          
+                    tr.appendChild(td); 
+                   
                     index++;
                 }     
+//                console.log(tr)
+                //********************* CAMPOS CALCULADOS *******************//
+
+                // CÁLCULO DE PREÇO (CUSTO X MARGEM)
+                const td = document.createElement('td');
+                const preco = parseFloat(item['preco_comp']) * (1 + parseFloat(item['margem']/100));
+//                console.log(item['tipo'])
+                td.innerHTML='R$'+(preco.toFixed(2) ); 
+                tr.appendChild(td);   
+
+                //******************* FIM CAMPOS CALCULADOS *****************//
+
                 tr.addEventListener('click',()=>{
                     tableClick(tr);
                 })
@@ -104,22 +140,13 @@
 
 
     function tableClick(tr){
-
-        console.log(tr.cells)
     
-        let params = `${tr.cells[0].innerHTML}&${tr.cells[1].innerHTML}&${tr.cells[2].innerHTML}&${tr.cells[3].innerHTML}&${tr.cells[4].innerHTML}&${tr.cells[5].innerHTML}&${tr.cells[6].innerHTML}&${tr.cells[7].innerHTML}&${tr.cells[8].innerHTML}&${tr.cells[9].innerHTML}&${tr.cells[10].innerHTML}`;
+        let params = tr.cells[0].innerHTML;
+        for(let i=1; i <tr.cells.length; i++){
+            params += '&'+tr.cells[i].innerHTML
+        }
         
         localStorage.setItem("params",params);
-
-
-//        console.log(params)
-/*
-        for (let i=0; i<tr.cells.length; i++) {
-
-            console.log(tr.cells[i].innerHTML)
-
-        }
-*/
 
         openHTML('show_prod.html','modal','Detalhes do Produto'); 
 

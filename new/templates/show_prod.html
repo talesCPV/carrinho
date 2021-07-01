@@ -1,13 +1,16 @@
 <div class="display">
-    <table class="w3-table-all ">
+    <table id="tbShow" class="w3-table-all ">
         <tr><td>Cod</td><td id="tdCod"></td></tr>
         <tr><td>Descrição</td><td id="tdDesc"></td></tr>
         <tr><td>Unidade</td><td id="tdUnd"></td></tr>
-        <tr><td>Etq</td><td id="tdEtq"></td></tr>
+        <tr><td>Estoque</td><td id="tdEtq"></td></tr>
         <tr><td>Cod. do Prod</td><td id="tdCodProd"></td></tr>
-        <tr><td>Fornecedor</td><td id="tdForn"></td></tr>
-        <tr><td>Preço</td><td id="tdPreco"></td></tr>
         <tr><td>NCM</td><td id="tdNCM"></td></tr>
+        <tr><td>Tipo</td><td id="tdTipo"></td></tr>
+        <tr><td>Fornecedor</td><td id="tdForn"></td></tr>
+        <tr><td>Compra</td><td id="tdCompra"></td></tr>
+        <tr><td>Margem</td><td id="tdMargem"></td></tr>
+        <tr style="font-weight: bolder; font-size: larger;"><td id="lblPreco">Preço</td><td id="tdPreco"></td></tr>
     </table>
 </div>
 
@@ -26,6 +29,29 @@
 
     const btnEditar = document.getElementById("btnEditar");
     const btnDel = document.getElementById("btnDel");
+    const table = document.getElementById('tbShow');
+
+    if(arr[1] >= 7000){
+        const preço = arr[11].substr(2);
+
+        document.getElementById('lblPreco').innerHTML = "900ml";
+
+        const dois = document.createElement('tr');
+        dois.innerHTML = `<td>1.8L</td><td>R$${(preço*2).toFixed(2)}</td>`;
+        dois.style = "font-weight: bolder; font-size: larger;"
+        table.appendChild(dois);
+        const tres = document.createElement('tr');
+        tres.style = "font-weight: bolder; font-size: larger;"
+        tres.innerHTML = `<td>2.7L</td><td>R$${(preço*3).toFixed(2)}</td>`;
+        table.appendChild(tres);
+        const quatro = document.createElement('tr');
+        quatro.style = "font-weight: bolder; font-size: larger;"
+        quatro.innerHTML = `<td>3.6L</td><td>R$${(preço*4).toFixed(2)}</td>`;
+        table.appendChild(quatro);
+
+        console.log(preço)
+    }
+
 
     btnEditar.addEventListener("click",()=>{
         openHTML("cad_prod.html","modal","Cadastro de Produto"); 
@@ -37,12 +63,15 @@
     if(arr.length > 0){
         document.getElementById('tdCod').innerHTML = arr[1].toUpperCase();
         document.getElementById('tdDesc').innerHTML = arr[2].toUpperCase();
+        document.getElementById('tdForn').innerHTML = arr[6].toUpperCase();
         document.getElementById('tdUnd').innerHTML = arr[3].toUpperCase();
         document.getElementById('tdEtq').innerHTML = arr[4].toUpperCase();
         document.getElementById('tdCodProd').innerHTML = arr[5].toUpperCase();
-        document.getElementById('tdForn').innerHTML = arr[6].toUpperCase();
-        document.getElementById('tdPreco').innerHTML = arr[7].toUpperCase();
-        document.getElementById('tdNCM').innerHTML = arr[8].toUpperCase();
+        document.getElementById('tdNCM').innerHTML = arr[9].toUpperCase();
+        document.getElementById('tdCompra').innerHTML = arr[7].toUpperCase();
+        document.getElementById('tdMargem').innerHTML = arr[8].toUpperCase();
+        document.getElementById('tdTipo').innerHTML = arr[10].toUpperCase();
+        document.getElementById('tdPreco').innerHTML = arr[11].toUpperCase();
     }
 
 /*
