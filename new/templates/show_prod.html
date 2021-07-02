@@ -25,14 +25,14 @@
 
     const arr = localStorage.getItem("params").split("&");
 
-    console.log(arr);
+//    console.log(arr);
 
     const btnEditar = document.getElementById("btnEditar");
     const btnDel = document.getElementById("btnDel");
     const table = document.getElementById('tbShow');
 
     if(arr[1] >= 7000){
-        const preço = arr[11].substr(2);
+        const preço = arr[arr.length-1].substr(2);
 
         document.getElementById('lblPreco').innerHTML = "900ml";
 
@@ -49,15 +49,21 @@
         quatro.innerHTML = `<td>3.6L</td><td>R$${(preço*4).toFixed(2)}</td>`;
         table.appendChild(quatro);
 
-        console.log(preço)
+//        console.log(preço)
     }
 
 
     btnEditar.addEventListener("click",()=>{
-        openHTML("cad_prod.html","modal","Cadastro de Produto"); 
+        openHTML("cad_prod.html","modal","Edição de Produto"); 
     });
     btnDel.addEventListener("click",()=>{
-        alert("Deletar");
+        if(window.confirm("Deletar este Registrio?")){
+            const data = new URLSearchParams();
+            data.append('query', `DELETE FROM tb_produto WHERE cod = ${arr[1].trim()}`);
+            queryDB(data);
+            btnClose.click();
+            btnPesq.click();
+        }
     });
 
     if(arr.length > 0){
@@ -71,7 +77,7 @@
         document.getElementById('tdCompra').innerHTML = arr[7].toUpperCase();
         document.getElementById('tdMargem').innerHTML = arr[8].toUpperCase();
         document.getElementById('tdTipo').innerHTML = arr[10].toUpperCase();
-        document.getElementById('tdPreco').innerHTML = arr[11].toUpperCase();
+        document.getElementById('tdPreco').innerHTML = arr[arr.length-1].toUpperCase();
     }
 
 /*

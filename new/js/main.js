@@ -219,7 +219,7 @@ function int_number(campo){
 // *********    POPULATION FIELDS    **********
 
 // fill combobox with query from DB (combobox, ajax source, query params, index params (option.innerHTML, option.value))
-function fillCmb(select, table, field1, field2=field1, where=""){
+function fillCmb(select, valor, table, field1, field2=field1, where=""){
     const query = `SELECT ${field1}, ${field2} FROM ${table} ${where}`;
     const data = new URLSearchParams();
     data.append('query', query);
@@ -230,12 +230,18 @@ function fillCmb(select, table, field1, field2=field1, where=""){
             let op = document.createElement('option');
             op.innerHTML = item[field2].toUpperCase();
             op.value = item[field1];
+            
+//            console.log(item['nome'].trim() + ' - ' + valor.trim())
+            if(item['nome'].trim() == valor.trim()){
+                op.selected = true;
+            }
+                 
             select.appendChild(op);        
         });    
     })     
 }
 
-function fillCmbTxt(select, path){
+function fillCmbTxt(select,valor ,path){
 
     const data = new URLSearchParams();
     data.append('path', path);
@@ -263,6 +269,9 @@ function fillCmbTxt(select, path){
             let op = document.createElement('option');
             op.innerHTML = item.toUpperCase();
             op.value = item.toUpperCase();
+            if(item.trim() == valor.trim()){
+                op.selected = true;
+            }            
             select.appendChild(op);        
         });    
     })
