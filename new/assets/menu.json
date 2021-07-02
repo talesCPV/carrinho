@@ -24,7 +24,7 @@
 					},
 		 			{
 						"nome": "Empresas",
-						"link": "pesq_emp.php",
+						"link": "empresa.html",
 						"id": "menuPesqEmp",
 						"novo": "cad_emp.html",
 						"icone": "fa fa-industry",

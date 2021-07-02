@@ -27,7 +27,8 @@ document.querySelector('.menu-aba').addEventListener('click',()=>{
     }
 })
 
-  function openHTML(template,where="window",label){     
+  function openHTML(template,where="window",label){    
+      console.log(template) 
     fetch( "templates/"+template)
     .then( stream => stream.text() )
     .then( text => {
@@ -229,13 +230,11 @@ function fillCmb(select, valor, table, field1, field2=field1, where=""){
         arr.forEach((item)=>{
             let op = document.createElement('option');
             op.innerHTML = item[field2].toUpperCase();
-            op.value = item[field1];
-            
+            op.value = item[field1];            
 //            console.log(item['nome'].trim() + ' - ' + valor.trim())
             if(item['nome'].trim() == valor.trim()){
                 op.selected = true;
             }
-                 
             select.appendChild(op);        
         });    
     })     

@@ -1,0 +1,153 @@
+
+    <div class="display w3-container ">
+        <h2 class="w3-center"> Empresas</h2>
+    </div>      
+
+    <div class="display">
+    <form class="w3-container">
+        <p style="display: flex">
+       
+            <select class="w3-input" name="cmbBusca" id="cmbBusca">
+                <option value= "nome" >Nome</option>
+                <option value="CLI">Clientes</option>
+                <option value="FOR">Fornecedores</option>
+                <option value="cnpj">CNPJ</option>
+                <option value="ie">Insc. Est.</option>
+                <option value="id">Cod.</option>
+            </select>
+            <input id="edtBusca" class="w3-input" type="text" placeholder="Busca">
+        </p>
+        <p>
+            <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnPesq"><i class="fa fa-search"></i></button>
+            <button class="w3-button w3-xlarge w3-circle w3-green w3-right" id="btnNovo">+</button>
+        </p>
+    </form>
+    </div>
+
+
+    <div class="display main-content">  
+        <table id="query-table" class="w3-table-all w3-hoverable"> </table>        
+    </div>
+
+<script>
+
+    const btnNovo = document.getElementById("btnNovo");
+    const btnPesq = document.getElementById("btnPesq");
+    const edtBusca = document.getElementById('edtBusca');
+    const cmbBusca = document.getElementById('cmbBusca');
+    const table = document.getElementById('query-table');
+
+    btnNovo.addEventListener("click", function(event){
+        event.preventDefault();
+        localStorage.removeItem("params");
+        modal_title.innerHTML = "";
+        modal_text.innerHTML = "";
+        openHTML('cad_emp.html','modal','Cadastro de Nova Empresa');     
+        modal.style.display = "block";        
+    });
+
+    btnPesq.addEventListener("click", function(event){
+        event.preventDefault();
+        table.innerHTML = "";        
+        const like = ['nome','cnpj','ie'];
+        const tipo = ['CLI','FOR'];
+//        const baixo = ['baixo'];
+
+        let where ;
+
+        if(like.includes(cmbBusca.value)){
+            where = `${cmbBusca.value} LIKE '%${edtBusca.value}%' `;
+        } else if(tipo.includes(cmbBusca.value)){
+            where = ` tipo = '${cmbBusca.value}' `;
+        }else{
+            where = `${cmbBusca.value} = '${edtBusca.value}'`;
+        }
+
+
+        const query = `SELECT * 
+                        FROM tb_empresa
+                        WHERE  ${where}
+                        ORDER BY nome`;
+
+        const data = new URLSearchParams();        
+        data.append("query", query);
+
+        console.log(query)
+
+        const resp = queryDB(data);
+        resp.then((response)=>{
+            const hide = [12,4,5,6,9,10,11];
+//            const money = [7];
+//            const perc = [8];
+            let arr = JSON.parse(response);           
+            arr.forEach((item,i)=>{
+                if(i==0){
+                    const tr = document.createElement('tr');
+                    tr.innerHTML="<th>Cod.</th><th>Nome Fantasia</th><th>CNPJ</th><th>Insc. Est.</th><th>Tipo</th><th>Telefone</th>"
+                    table.appendChild(tr);
+                }
+                const tr = document.createElement('tr');
+                let index = 0;
+                for (var prop in item) {
+                    const td = document.createElement('td');
+                    if(item[prop] != null){
+                        td.innerHTML = item[prop].toUpperCase();
+                    }else{
+                        td.innerHTML = '';
+                    }
+
+                    if(hide.includes(index)){
+                        td.style="display:none;"
+                    }
+/*                    
+                    if(money.includes(index)){
+                        td.innerHTML = 'R$'+parseFloat(td.innerHTML).toFixed(2)
+                    }        
+                    if(perc.includes(index)){
+                        td.innerHTML += '%'; 
+                    }                                          
+*/                    
+                    tr.appendChild(td); 
+                   
+                    index++;
+                }     
+/*                
+//                console.log(tr)
+                //********************* CAMPOS CALCULADOS *******************
+
+                // CÁLCULO DE PREÇO (CUSTO X MARGEM)
+                const td = document.createElement('td');
+                const preco = parseFloat(item['preco_comp']) * (1 + parseFloat(item['margem']/100));
+//                console.log(item['tipo'])
+                td.innerHTML='R$'+(preco.toFixed(2) ); 
+                tr.appendChild(td);   
+
+                //******************* FIM CAMPOS CALCULADOS *****************
+*/
+                tr.addEventListener('click',()=>{
+                    tableClick(tr);
+                })
+                table.appendChild(tr);
+
+            });  
+        })
+
+    });
+
+
+    function tableClick(tr){
+    
+        let params = tr.cells[0].innerHTML;
+        for(let i=1; i <tr.cells.length; i++){
+            params += '&'+tr.cells[i].innerHTML
+        }
+        
+        localStorage.setItem("params",params);
+
+        openHTML('show_prod.html','modal','Detalhes do Produto'); 
+
+    }
+
+
+
+</script>
