@@ -1,0 +1,69 @@
+<div class="display">
+    <table id="tbShow" class="w3-table-all ">
+        <tr style="font-weight: bolder; font-size: larger;"><td>Nome Fantasia</td><td id="tdFant"></td></tr>
+        <tr><td>Cod</td><td id="tdCod"></td></tr>
+        <tr><td>Nome</td><td id="tdNome"></td></tr>
+        <tr><td>CNPJ</td><td id="tdCNPJ"></td></tr>
+        <tr><td>Insc. Est.</td><td id="tdIE"></td></tr>
+        <tr><td>Endereço</td><td id="tdEnd"></td></tr>
+        <tr><td>Num.</td><td id="tdNum"></td></tr>
+        <tr><td>Cidade</td><td id="tdCid"></td></tr>
+        <tr><td>Estado</td><td id="tdUF"></td></tr>
+        <tr><td>Bairro</td><td id="tdBairro"></td></tr>
+        <tr><td>Cep</td><td id="tdCEP"></td></tr>
+        <tr><td>Telefone</td><td id="tdTel"></td></tr>
+        <tr><td>Tipo</td><td id="tdTipo"></td></tr>
+    </table>
+</div>
+
+<div class="display"  >
+
+        <button id="btnEditar" class="w3-button w3-green w3-right">Editar</button>
+        <button id="btnDel" class="w3-button w3-green w3-right">Deletar</button>    
+
+</div>
+
+<script>
+
+    const arr = localStorage.getItem("params").split("&");
+
+    console.log(arr);
+
+    const btnEditar = document.getElementById("btnEditar");
+    const btnDel = document.getElementById("btnDel");
+    const table = document.getElementById('tbShow');
+
+
+    btnEditar.addEventListener("click",()=>{
+        openHTML("cad_emp.html","modal","Modo de Edição de Registro de Empresa"); 
+    });
+    btnDel.addEventListener("click",()=>{
+        if(window.confirm("Deletar esta Empresa?")){
+            console.log(`DELETE FROM tb_empresa WHERE id=${arr[0].trim()};`);
+            const data = new URLSearchParams();
+            data.append('query', `DELETE FROM tb_empresa WHERE id=${arr[0].trim()};`);
+            queryDB(data);
+            btnClose.click();
+            btnPesq.click();
+        }
+    });
+
+    if(arr.length > 0){
+        document.getElementById('tdCod').innerHTML = arr[0].toUpperCase();
+        document.getElementById('tdNome').innerHTML = arr[1].toUpperCase();
+        document.getElementById('tdFant').innerHTML = arr[12].toUpperCase();
+        document.getElementById('tdCNPJ').innerHTML = arr[2].toUpperCase();
+        document.getElementById('tdIE').innerHTML = arr[3].toUpperCase();
+        document.getElementById('tdEnd').innerHTML = arr[4].toUpperCase();
+        document.getElementById('tdNum').innerHTML = arr[11].toUpperCase();
+        document.getElementById('tdCid').innerHTML = arr[5].toUpperCase();
+        document.getElementById('tdUF').innerHTML = arr[6].toUpperCase();
+        document.getElementById('tdBairro').innerHTML = arr[10].toUpperCase();
+        document.getElementById('tdTel').innerHTML = arr[8].toUpperCase();
+        document.getElementById('tdCEP').innerHTML = arr[9].toUpperCase();
+        document.getElementById('tdTipo').innerHTML = arr[7].toUpperCase();
+       
+    }
+
+
+</script>

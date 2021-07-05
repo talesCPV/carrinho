@@ -51,7 +51,6 @@
         table.innerHTML = "";        
         const like = ['nome','cnpj','ie'];
         const tipo = ['CLI','FOR'];
-//        const baixo = ['baixo'];
 
         let where ;
 
@@ -72,13 +71,11 @@
         const data = new URLSearchParams();        
         data.append("query", query);
 
-        console.log(query)
+//        console.log(query)
 
         const resp = queryDB(data);
         resp.then((response)=>{
             const hide = [12,4,5,6,9,10,11];
-//            const money = [7];
-//            const perc = [8];
             let arr = JSON.parse(response);           
             arr.forEach((item,i)=>{
                 if(i==0){
@@ -99,31 +96,12 @@
                     if(hide.includes(index)){
                         td.style="display:none;"
                     }
-/*                    
-                    if(money.includes(index)){
-                        td.innerHTML = 'R$'+parseFloat(td.innerHTML).toFixed(2)
-                    }        
-                    if(perc.includes(index)){
-                        td.innerHTML += '%'; 
-                    }                                          
-*/                    
+               
                     tr.appendChild(td); 
                    
                     index++;
                 }     
-/*                
-//                console.log(tr)
-                //********************* CAMPOS CALCULADOS *******************
 
-                // CÁLCULO DE PREÇO (CUSTO X MARGEM)
-                const td = document.createElement('td');
-                const preco = parseFloat(item['preco_comp']) * (1 + parseFloat(item['margem']/100));
-//                console.log(item['tipo'])
-                td.innerHTML='R$'+(preco.toFixed(2) ); 
-                tr.appendChild(td);   
-
-                //******************* FIM CAMPOS CALCULADOS *****************
-*/
                 tr.addEventListener('click',()=>{
                     tableClick(tr);
                 })
@@ -144,7 +122,7 @@
         
         localStorage.setItem("params",params);
 
-        openHTML('show_prod.html','modal','Detalhes do Produto'); 
+        openHTML('show_emp.html','modal','Detalhes da Empresa'); 
 
     }
 

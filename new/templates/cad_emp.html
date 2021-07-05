@@ -6,33 +6,34 @@
 
         <form class="w3-container">
 
-            <label >Descrição *</label>
-            <input class="w3-input w3-margin-bottom" type="text" id="edtDesc"  />
-            <label >Fornecedor</label>
-            <select class="w3-input w3-margin-bottom" id="cmbEmp"></select>
-            <label >Unidade</label>
-            <select class="w3-input w3-margin-bottom" id="cmbUnid"></select>
-            <label >Estoque</label>
-            <input class="w3-input w3-margin-bottom" type="text" id="edtEtq" value="0"/>
+            <label >Nome *</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtNome"  />
+            <label >Nome Fantasia</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtFant"  />
+            <label >CNPJ</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtCNPJ"  />
+            <label >Insc. Estadual</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtIE" />
+            <label>Endereço.</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtEnd" />
+            <label >Num.</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtNum" />
+            <label >Cidade</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtCid" />
+            <label >Estado</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtUF"  />
+            <label >Bairro</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtBairro" />
+            <label >CEP</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtCEP"/>
+            <label >Telefone</label>
+            <input class="w3-input w3-margin-bottom" type="text" id="edtFone" />
             <label>Tipo</label>
-            <select class="w3-input w3-margin-bottom"  id="cmbTipo"   >
-                <option value="VENDA">Produto</option>
-                <option value="CONJ">Conjunto</option>
-                <option value="SERVICO">Serviço</option>
-                <option value="TINTA">Tinta</option>
+            <select class="w3-input w3-margin-bottom"  id="cmbTipo">
+                <option value="FOR">Fornecedor</option>
+                <option value="CLI" selected>Cliente</option>
             </select>
-            <label>Estoque Min.</label>
-            <input class="w3-input w3-margin-bottom" type="text" id="edtEtqMin" value="0"  />
-            <label >Cód. do Produto</label>
-            <input class="w3-input w3-margin-bottom" type="text" id="edtCodProd" class=""  />
-            <label >Cód. de Barras</label>
-            <input class="w3-input w3-margin-bottom" type="text" id="edtCodBar" class=""  />
-            <label >NCM</label>
-            <input class="w3-input w3-margin-bottom" type="text" id="edtNCM" onkeyup="return int_number(this)"  />
-            <label >Preço de Compra R$</label>
-            <input class="w3-input w3-margin-bottom" type="text" id="edtCompra" onkeyup="return float_number(this)" value="0"/>
-            <label >Margem de Lucro %</label>
-            <input class="w3-input w3-margin-bottom" type="text" id="edtMargem" onkeyup="return float_number(this,1)" value="0"/>
+
             <button class="w3-button w3-green w3-round-large w3-margin-bottom w3-right" id="btnSave">Salvar</button>
 
 
@@ -57,39 +58,34 @@
 //    console.log(fields.length);
 
     const btnSave = document.getElementById('btnSave');
-    const cmbEmp = document.getElementById('cmbEmp');
-    const cmbUnid = document.getElementById("cmbUnid");
-    const edtDesc = document.getElementById("edtDesc");
-    const edtEtq = document.getElementById("edtEtq");
-    const edtEtqMin = document.getElementById("edtEtqMin");
+    const edtNome = document.getElementById('edtNome');
+    const edtFant = document.getElementById("edtFant");
+    const edtCNPJ = document.getElementById("edtCNPJ");
+    const edtIE = document.getElementById("edtIE");
+    const edtEnd = document.getElementById("edtEnd");
+    const edtNum = document.getElementById("edtNum");
+    const edtCid = document.getElementById("edtCid");
+    const edtUF = document.getElementById("edtUF");
+    const edtBairro = document.getElementById("edtBairro");
+    const edtCEP = document.getElementById("edtCEP");
+    const edtFone = document.getElementById("edtFone");
     const cmbTipo = document.getElementById("cmbTipo");
-    const edtCodProd = document.getElementById("edtCodProd");
-    const edtCodBar = document.getElementById("edtCodBar");
-    const edtNCM = document.getElementById("edtNCM");
-    const edtCompra = document.getElementById("edtCompra");
-    const edtMargem = document.getElementById("edtMargem");
 
     if(fields.length > 0){
-        edtDesc.value = fields[2];
-        edtEtq.value = fields[4];
-        edtCodProd.value = fields[5];
-        edtCodBar.value = fields[13];
-        edtNCM.value = fields[9];
-        edtCompra.value = fields[7];
-        edtMargem.value = fields[8];
-
-        float_number(edtCodBar);
-        float_number(edtNCM);
-        float_number(edtCompra);
-        float_number(edtMargem);
-
-        emp = fields[6].trim();
-        und = fields[3].trim();
+        edtNome.value = fields[1];
+        edtFant.value = fields[12];
+        edtCNPJ.value = fields[2];
+        edtIE.value = fields[3];
+        edtEnd.value = fields[4];
+        edtNum.value = fields[11];
+        edtCid.value = fields[5];
+        edtUF.value = fields[6];
+        edtBairro.value = fields[10];
+        edtCEP.value = fields[9];
+        edtFone.value = fields[8];
+        cmbTipo.value = fields[7];
 
     }
-
-    fillCmb(cmbEmp,emp,'tb_empresa','id','nome','');
-    fillCmbTxt(cmbUnid,und,'../assets/unidades.txt');
 
     btnSave.addEventListener('click',(event)=>{
         event.preventDefault;
@@ -101,35 +97,38 @@
         let query;
 
         if(fields.length == 0){ // NOVO CADASTRO
-            query = `INSERT INTO tb_produto SET
-                        cod = (SELECT MAX(p.cod)+1 FROM tb_produto as p WHERE p.cod < 7000),
-                        id_emp = ${cmbEmp.value},
-                        descricao = '${edtDesc.value}',
-                        estoque = ${edtEtq.value},
-                        etq_min = ${edtEtqMin.value},
-                        unidade = '${cmbUnid.value}',
-                        ncm = '${edtNCM.value}',
-                        cod_bar = '${edtCodProd.value}',
-                        preco_comp = ${edtCompra.value},
-                        margem = ${edtMargem.value},
+            query = `INSERT INTO tb_empresa SET
+                        id = 'DEFAULT',
+                        nome = '${edtNome.value}',
+                        cnpj = '${edtCNPJ.value}',
+                        ie = '${edtIE.value}',
+                        endereco = '${edtEnd.value}',
+                        cidade = '${edtCid.value}',
+                        estado = '${edtUF.value}',
+                        bairro = '${edtBairro.value}',
+                        num = '${edtNum.value}',
                         tipo = '${cmbTipo.value}',
-                        cod_cli = '${edtCodBar.value}' ;`;
+                        tel = '${edtFone.value}',
+                        cep = '${edtCEP.value}',
+                        fantasia = '${edtFant.value}' ;`;
         }else{ // EDITAR PRODUTO
-            query = `UPDATE tb_produto SET
-                        id_emp = ${cmbEmp.value},
-                        descricao = '${edtDesc.value}',
-                        estoque = ${edtEtq.value},
-                        etq_min = ${edtEtqMin.value},
-                        unidade = '${cmbUnid.value}',
-                        ncm = '${edtNCM.value}',
-                        cod_bar = '${edtCodProd.value}',
-                        preco_comp = ${edtCompra.value},
-                        margem = ${edtMargem.value},
+            query = `UPDATE tb_empresa SET
+                        nome = '${edtNome.value}',
+                        cnpj = '${edtCNPJ.value}',
+                        ie = '${edtIE.value}',
+                        endereco = '${edtEnd.value}',
+                        cidade = '${edtCid.value}',
+                        estado = '${edtUF.value}',
+                        bairro = '${edtBairro.value}',
+                        num = '${edtNum.value}',
                         tipo = '${cmbTipo.value}',
-                        cod_cli = '${edtCodBar.value}' 
-                        WHERE cod = ${fields[1].trim()};`;            
+                        tel = '${edtFone.value}',
+                        cep = '${edtCEP.value}',
+                        fantasia = '${edtFant.value}'
+                        WHERE id = ${fields[0].trim()};`;            
         }
 
+//        alert(query)
 //        console.log(query)
 
         const data = new URLSearchParams();
@@ -138,7 +137,6 @@
         btnClose.click();
         if(fields.length > 0){
             btnPesq.click();
-
         }
 
        

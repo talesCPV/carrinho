@@ -49,13 +49,26 @@ document.querySelector('.menu-aba').addEventListener('click',()=>{
   }
 
 function loadMenu(){
-    const data = new URLSearchParams();        
-    data.append("email", localStorage.getItem("email"));
-    data.append("pass", localStorage.getItem("pass"));
+
+    const email = localStorage.getItem("email");
+    const pass = localStorage.getItem("pass");
+
+    if(email === null || pass === null){
+        logout_here();
+    }
+
+    const data = new URLSearchParams();     
+
+    data.append("email", email);
+    data.append("pass", pass);
+
+    
     const myRequest = new Request("ajax/load_menu.php",{
         method : "POST",
         body : data
     });
+
+
     const myPromisse = new Promise((resolve,reject) =>{
 
         fetch(myRequest)
@@ -126,8 +139,8 @@ function loadMenu(){
 }
 
 function logout_here(){
-    localStorage.clear();
-    window.open("login.html","_self")  
+//    localStorage.clear();
+    window.open("index.html","_self")  
 }
 
 
@@ -232,11 +245,15 @@ function fillCmb(select, valor, table, field1, field2=field1, where=""){
             op.innerHTML = item[field2].toUpperCase();
             op.value = item[field1];            
 //            console.log(item['nome'].trim() + ' - ' + valor.trim())
+
             if(item['nome'].trim() == valor.trim()){
                 op.selected = true;
             }
+          
             select.appendChild(op);        
-        });    
+        }); 
+//        select.value = valor.trim();
+//        console.log(valor.trim())   
     })     
 }
 
